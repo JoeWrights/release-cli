@@ -1,0 +1,43 @@
+{
+    "name": "@joewrights/release-cli",
+    "version": "1.0.0-alpha.0",
+    "description": "A CLI tool for releasing projects",
+    "author": "1035208578@qq.com",
+    "license": "MIT",
+    "main": "./lib/index.js",
+    "bin": {
+        "release-cli": "./lib/bin/index.js"
+    },
+    "files": [
+        "lib"
+    ],
+    "scripts": {
+        "build": "./node_modules/.bin/rimraf lib && yarn tsc",
+        "tsc": "./node_modules/.bin/tsc",
+        "lint": "eslint src --ext .ts,.tsx",
+        "lint:fix": "eslint src --ext .ts,.tsx --fix",
+        "format": "prettier --write \"src/**/*.{ts,tsx,js,jsx,json}\"",
+        "format:check": "prettier --check \"src/**/*.{ts,tsx,js,jsx,json}\""
+    },
+    "dependencies": {
+        "commander": "7.2.0",
+        "conventional-changelog": "^4.0.0",
+        "execa": "5.1.1",
+        "inquirer": "8.2.4",
+        "kolorist": "^1.8.0",
+        "semver": "7.5.3"
+    },
+    "devDependencies": {
+        "@joewrights/presets": "^1.0.0",
+        "@types/conventional-changelog": "3.1.1",
+        "@types/inquirer": "9.0.3",
+        "@types/node": "20.12.12",
+        "@types/semver": "7.5.0",
+        "rimraf": "^6.1.2",
+        "typescript": "5.1.6"
+    },
+    "publishConfig": {
+        "access": "public",
+        "registry": "https://registry.npmjs.org/"
+    }
+}

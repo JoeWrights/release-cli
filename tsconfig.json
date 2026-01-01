@@ -1,0 +1,30 @@
+{
+    "compilerOptions": {
+        "target": "ES5",
+        "module": "CommonJS",
+        "declaration": true,
+        "removeComments": true,
+        "strict": true,
+        "resolveJsonModule": true,
+        "newLine": "lf",
+        "allowJs": true,
+        "esModuleInterop": true,
+        "skipLibCheck": true,
+        "lib": [
+            "dom",
+            "dom.iterable",
+            "ESNext"
+        ],
+        "typeRoots": [
+            "./node_modules/@types",
+        ],
+        "baseUrl": "./",
+        "outDir": "./lib"
+    },
+    "include": [
+        "./src/**/*"
+    ],
+    "exclude": [
+        "./node_modules"
+    ]
+}

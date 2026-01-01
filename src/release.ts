@@ -1,0 +1,175 @@
+import execa from "execa"
+import inquirer from "inquirer"
+import semver, { ReleaseType as SemVerReleaseType } from "semver"
+import fs from "fs"
+import path from "path"
+import { yellow } from "kolorist"
+
+import {
+    asyncFileIsExists,
+    getBumpVersions,
+    getCWD,
+    getPackageJson,
+    getPackageJsonPath,
+    getParsedConfigJsonData,
+    getPromptQuestions,
+    showError,
+} from "./utils"
+import generateChangelog from "./changelog"
+
+import { ReleaseCliOptions, ReleaseType } from "./types"
+
+/**
+ * Release the project
+ * @param options The options
+ * @returns void
+ */
+async function release(options?: Record<string, any>) {
+    if (options?.version) {
+        return console.log(yellow(require("../package.json").version))
+    }
+
+    const exists = await asyncFileIsExists(getPackageJsonPath())
+
+    if (!exists) {
+        return showError(new Error("package.json 文件不存在"))
+    }
+
+    let curBranch: string
+
+    try {
+        const { stdout: b } = execa.commandSync("git symbolic-ref --short HEAD")
+        curBranch = b
+    } catch (error) {
+        return showError(new Error("当前不在git仓库中，请先初始化git仓库"))
+    }
+
+    const { stdout: statusStdout } = execa.commandSync("git status -s")
+
+    let mergedConfig: ReleaseCliOptions = {
+        autoBuild: true,
+        autoTag: false,
+        branchBlacklist: ["master", "main"],
+        packageJsonFileIndent: 4,
+    }
+
+    if (options?.config) {
+        const config = require(path.resolve(getCWD(), options.config))
+
+        if (typeof config === "function") {
+            mergedConfig = {
+                ...mergedConfig,
+                ...config(),
+            }
+        } else {
+            mergedConfig = {
+                ...mergedConfig,
+                ...config,
+            }
+        }
+    } else {
+        const releaseCliConfig = getPackageJson().releaseCliConfig
+
+        if (releaseCliConfig) {
+            mergedConfig = {
+                ...mergedConfig,
+                ...releaseCliConfig,
+            }
+        }
+    }
+
+    const parsedConfig = getParsedConfigJsonData(JSON.stringify(mergedConfig))
+
+    const isBranchBlacklisted = parsedConfig.branchBlacklist.some(
+        (item: string | RegExp) => {
+            if (item instanceof RegExp) {
+                return item.test(curBranch)
+            }
+            return item === curBranch
+        },
+    )
+
+    if (isBranchBlacklisted) {
+        return showError(
+            new Error(
+                `当前分支 ${curBranch} 禁止发布，请切换到其他分支进行发布`,
+            ),
+        )
+    }
+
+    if (statusStdout) {
+        return showError(
+            new Error(
+                `当前分支有未提交的文件，请先提交或暂存文件（使用 "git add ." 暂存所有文件）`,
+            ),
+        )
+    }
+
+    const { versions, curVersion } = getBumpVersions()
+    const { bump, preRelease, customVersion } = await getPromptQuestions()
+
+    if (customVersion && !semver.valid(customVersion)) {
+        return showError(new Error("输入的版本号不规范，请重新输入"))
+    }
+
+    let version = customVersion || versions[bump]
+
+    if (preRelease) {
+        version = semver.inc(
+            curVersion,
+            ReleaseType.PRELEASE as SemVerReleaseType,
+            preRelease,
+        )
+    }
+
+    const { yes } = await inquirer.prompt([
+        {
+            type: "confirm",
+            name: "yes",
+            message: `确定要发布 ${version} 版本?`,
+        },
+    ])
+
+    if (!yes) {
+        return
+    }
+
+    // 检查npm包输入该版本是否存在
+    const { stdout: npmPackageVersion } = execa.commandSync(
+        `npm view ${getPackageJson().name} version`,
+    )
+
+    if (npmPackageVersion && semver.gt(version, npmPackageVersion)) {
+        return showError(
+            new Error(
+                `npm包 ${getPackageJson().name} 已存在该版本，请重新输入`,
+            ),
+        )
+    }
+
+    const pkgContent = JSON.parse(
+        fs.readFileSync(getPackageJsonPath(), "utf-8"),
+    )
+
+    pkgContent.version = version
+
+    fs.writeFileSync(
+        getPackageJsonPath(),
+        `${JSON.stringify(
+            pkgContent,
+            null,
+            mergedConfig.packageJsonFileIndent,
+        )}\n`,
+    )
+
+    await generateChangelog(version, mergedConfig)
+
+    if (mergedConfig.autoBuild) {
+        await execa("npm", ["run", "build"], {
+            stdio: "inherit",
+            cwd: path.dirname(getPackageJsonPath()),
+        })
+    }
+}
+
+export default release

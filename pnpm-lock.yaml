@@ -26,9 +26,9 @@ importers:
       semver:
         specifier: 7.5.3
         version: 7.5.3
-      zod:
-        specifier: ^4.3.4
-        version: 4.3.4
+      superstruct:
+        specifier: ^2.0.2
+        version: 2.0.2
     devDependencies:
       '@joewrights/presets':
         specifier: ^1.0.0
@@ -2792,6 +2792,10 @@ packages:
     resolution: {integrity: sha512-78O4c6IswZ9TzpcIiQJIN49K3qNoXTM8zEJzhaTE/xRTCZswaovSEVIa/uwbOltZrk16X4jAxjaOhzz/hTm1Kw==}
     engines: {node: ^14.13.1 || >=16.0.0}
     hasBin: true
+
+  superstruct@2.0.2:
+    resolution: {integrity: sha512-uV+TFRZdXsqXTL2pRvujROjdZQ4RAlBUS5BTh9IGm+jTqQntYThciG/qu57Gs69yjnVUSqdxF9YLmSnpupBW9A==}
+    engines: {node: '>=14.0.0'}
 
   supports-color@5.5.0:
     resolution: {integrity: sha512-QjVjwdXIt408MIiAqCX4oUKsgU2EqAGzs2Ppkm4aQYbjm+ZEWEcW4SfFNTr4uMNZma0ey4f5lgLrkB0aX0QMow==}
@@ -6303,6 +6307,8 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
       - typescript
+
+  superstruct@2.0.2: {}
 
   supports-color@5.5.0:
     dependencies:

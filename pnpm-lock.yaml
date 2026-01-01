@@ -26,6 +26,9 @@ importers:
       semver:
         specifier: 7.5.3
         version: 7.5.3
+      zod:
+        specifier: ^4.3.4
+        version: 4.3.4
     devDependencies:
       '@joewrights/presets':
         specifier: ^1.0.0

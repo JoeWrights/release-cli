@@ -16,6 +16,7 @@ import {
     showError,
 } from "./utils"
 import generateChangelog from "./changelog"
+import { validateConfig } from "./config"
 
 import { ReleaseCliOptions, ReleaseType } from "./types"
 
@@ -46,7 +47,7 @@ async function release(options?: Record<string, any>) {
 
     const { stdout: statusStdout } = execa.commandSync("git status -s")
 
-    let mergedConfig: ReleaseCliOptions = {
+    let rawConfig: Record<string, any> = {
         autoBuild: true,
         autoTag: false,
         branchBlacklist: ["master", "main"],
@@ -57,13 +58,13 @@ async function release(options?: Record<string, any>) {
         const config = require(path.resolve(getCWD(), options.config))
 
         if (typeof config === "function") {
-            mergedConfig = {
-                ...mergedConfig,
+            rawConfig = {
+                ...rawConfig,
                 ...config(),
             }
         } else {
-            mergedConfig = {
-                ...mergedConfig,
+            rawConfig = {
+                ...rawConfig,
                 ...config,
             }
         }
@@ -71,11 +72,23 @@ async function release(options?: Record<string, any>) {
         const releaseCliConfig = getPackageJson().releaseCliConfig
 
         if (releaseCliConfig) {
-            mergedConfig = {
-                ...mergedConfig,
+            rawConfig = {
+                ...rawConfig,
                 ...releaseCliConfig,
             }
         }
+    }
+
+    // 使用 zod 验证配置
+    let mergedConfig: ReleaseCliOptions
+    try {
+        mergedConfig = validateConfig(rawConfig)
+    } catch (error) {
+        return showError(
+            error instanceof Error
+                ? error
+                : new Error("releaseCli 配置验证失败，请检查配置格式"),
+        )
     }
 
     const parsedConfig = getParsedConfigJsonData(JSON.stringify(mergedConfig))

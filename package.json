@@ -25,7 +25,8 @@
         "execa": "5.1.1",
         "inquirer": "8.2.4",
         "kolorist": "^1.8.0",
-        "semver": "7.5.3"
+        "semver": "7.5.3",
+        "zod": "^4.3.4"
     },
     "devDependencies": {
         "@joewrights/presets": "^1.0.0",

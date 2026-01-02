@@ -52,8 +52,10 @@ async function executeGitCommand(version: string, options: ReleaseCliOptions) {
 async function generateChangelog(version: string, options: ReleaseCliOptions) {
     const fileStream = getChangelogFileStream()
 
-    cc({
-        preset: "angular",
+    // 显式传递配置对象，确保 releaseCount 和 pkg.transform 配置生效
+    // 这可以解决 pnpm lockfileVersion 9.0 可能导致的依赖解析问题
+    const changelogOptions = {
+        preset: "angular" as const,
         releaseCount: 0,
         pkg: {
             transform: (pkg: Record<string, any>) => {
@@ -63,7 +65,9 @@ async function generateChangelog(version: string, options: ReleaseCliOptions) {
                 }
             },
         },
-    } as Parameters<typeof cc>[0])
+    }
+
+    cc(changelogOptions)
         .pipe(fileStream)
         .on("close", async () => {
             await executeGitCommand(version, options)

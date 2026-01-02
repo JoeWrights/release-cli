@@ -97,7 +97,7 @@ export const getBumpChoices = () => {
     return BUMPS.map((bump) => {
         return {
             name:
-                bump.type === ReleaseType.PRELEASE
+                bump.type === ReleaseType.PRERELEASE
                     ? bump.intro
                     : `${bump.intro} (${versions[bump.type]})`,
             value: bump.type,
@@ -133,7 +133,7 @@ export const getPromptQuestions = async () => {
     if (preReleaseType) {
         customDefaultVersion = semver.inc(
             curVersion,
-            ReleaseType.PRELEASE as SemVerReleaseType,
+            ReleaseType.PRERELEASE as SemVerReleaseType,
         )
     }
 
@@ -154,7 +154,7 @@ export const getPromptQuestions = async () => {
             name: "preRelease",
             type: "list",
             message: "请选择预发布类型:",
-            when: (answers) => answers.bump === ReleaseType.PRELEASE,
+            when: (answers) => answers.bump === ReleaseType.PRERELEASE,
             choices: PRE_RELEASE.map((item) => {
                 return {
                     name: item.intro,

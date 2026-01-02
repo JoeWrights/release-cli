@@ -17,7 +17,7 @@ export const BUMPS = [
         intro: "补丁版本更新,兼容老版本，只是修复一些bug",
     },
     {
-        type: ReleaseType.PRELEASE,
+        type: ReleaseType.PRERELEASE,
         intro: "预发布版本",
     },
 ]

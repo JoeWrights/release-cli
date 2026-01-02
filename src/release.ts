@@ -128,7 +128,7 @@ async function release(options?: Record<string, any>) {
     if (preRelease) {
         version = semver.inc(
             curVersion,
-            ReleaseType.PRELEASE as SemVerReleaseType,
+            ReleaseType.PRERELEASE as SemVerReleaseType,
             preRelease,
         )
     }

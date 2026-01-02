@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import cc from "conventional-changelog"
 import execa from "execa"
 
@@ -56,14 +57,12 @@ async function generateChangelog(version: string, options: ReleaseCliOptions) {
         preset: "angular",
         releaseCount: 0,
         pkg: {
-            transform: (pkg: Record<string, any>) => {
-                return {
-                    ...pkg,
-                    version: `v${version}`,
-                }
+            transform: (pkg) => {
+                pkg.version = `v${version}`
+                return pkg
             },
         },
-    } as Parameters<typeof cc>[0])
+    })
         .pipe(fileStream)
         .on("close", async () => {
             await executeGitCommand(version, options)

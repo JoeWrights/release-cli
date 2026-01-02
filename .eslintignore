@@ -1,7 +1,7 @@
 .node_modules
-.lib
-.dist
-.build
+lib
+dist
+build
 
 .eslintrc.js
 .prettierrc.js

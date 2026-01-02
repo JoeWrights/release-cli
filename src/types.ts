@@ -29,4 +29,11 @@ export interface ReleaseCliOptions {
     tagSuffix?: string
     branchBlacklist?: string[]
     packageJsonFileIndent?: number
+    /**
+     * 生成多少个版本的 changelog
+     * - 0: 生成所有版本（多个版本号）
+     * - 1: 只生成最新一个版本（单个版本号，默认值）
+     * - 2+: 生成最近 N 个版本
+     */
+    releaseCount?: number
 }

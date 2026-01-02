@@ -40,6 +40,14 @@ export const releaseCliConfigSchema = object({
      * package.json 文件的缩进空格数
      */
     packageJsonFileIndent: defaulted(optional(number()), 4),
+
+    /**
+     * 生成多少个版本的 changelog
+     * - 0: 生成所有版本（多个版本号）
+     * - 1: 只生成最新一个版本（单个版本号，默认值）
+     * - 2+: 生成最近 N 个版本
+     */
+    releaseCount: defaulted(optional(number()), 1),
 })
 
 /**

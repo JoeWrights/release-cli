@@ -1,5 +1,6 @@
 {
     "name": "@joewrights/release-cli",
+    "private": true,
     "version": "1.0.2-alpha.1",
     "description": "A CLI tool for releasing projects",
     "author": "1035208578@qq.com",
@@ -42,6 +43,11 @@
         "rimraf": "^6.1.2",
         "typescript": "5.1.6",
         "vitest": "^3.2.4"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git@github.com:JoeWrights/release-cli.git",
+        "branch": "master"
     },
     "publishConfig": {
         "access": "public",

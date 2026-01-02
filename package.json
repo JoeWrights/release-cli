@@ -1,6 +1,6 @@
 {
     "name": "@joewrights/release-cli",
-    "version": "1.0.0-beta.1",
+    "version": "1.0.0-beta.2",
     "description": "A CLI tool for releasing projects",
     "author": "1035208578@qq.com",
     "license": "MIT",

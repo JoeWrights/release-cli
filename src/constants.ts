@@ -47,3 +47,5 @@ export const PRE_RELEASE = [
         intro: "实验(experimental)",
     },
 ]
+
+console.log(PRE_RELEASE, "PRE_RELEASE")

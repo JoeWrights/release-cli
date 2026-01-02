@@ -25,7 +25,7 @@ export const releaseCliConfigSchema = object({
     autoTag: defaulted(optional(boolean()), false),
 
     /**
-     * Tag 后缀
+     * Tag 后缀,用于在 Git tag 中添加后缀
      */
     tagSuffix: defaulted(optional(string()), ""),
 

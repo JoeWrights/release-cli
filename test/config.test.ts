@@ -1,5 +1,6 @@
-import { describe, it, expect } from "vitest"
-import { validateConfig, safeValidateConfig } from "../src/config"
+import { describe, expect, it } from "vitest"
+
+import { safeValidateConfig, validateConfig } from "../src/config"
 
 describe("配置验证", () => {
     describe("validateConfig", () => {
@@ -31,7 +32,10 @@ describe("配置验证", () => {
             console.log("📦 输入配置（空对象）：", config)
 
             const result = validateConfig(config)
-            console.log("✅ 应用默认值后的结果：", JSON.stringify(result, null, 2))
+            console.log(
+                "✅ 应用默认值后的结果：",
+                JSON.stringify(result, null, 2),
+            )
 
             expect(result.autoBuild).toBe(true)
             expect(result.autoTag).toBe(false)
@@ -176,4 +180,3 @@ describe("配置验证", () => {
         })
     })
 })
-

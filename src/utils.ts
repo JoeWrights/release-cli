@@ -1,10 +1,11 @@
+/* eslint-disable unicorn/no-process-exit */
 import fs from "fs"
+import inquirer from "inquirer"
 import path from "path"
 import semver, { ReleaseType as SemVerReleaseType } from "semver"
 
 import { BUMPS, PRE_RELEASE } from "./constants"
 import { PreReleaseType, ReleaseType } from "./types"
-import inquirer from "inquirer"
 
 /**
  * Get the current working directory
@@ -55,9 +56,7 @@ export const getParsedConfigJsonData = (data: string) => {
     const parsedData = JSON.parse(data)
     const branchBlacklist = parsedData.branchBlacklist || []
 
-    for (let i = 0; i < branchBlacklist.length; i++) {
-        const value = branchBlacklist[i]
-
+    for (const [i, value] of branchBlacklist.entries()) {
         if (typeof value === "string" && value.startsWith("/")) {
             const regexString = parsedData.branchBlacklist[i].slice(1, -1)
             parsedData.branchBlacklist[i] = new RegExp(regexString)
@@ -188,10 +187,10 @@ export const getPromptQuestions = async () => {
  */
 export const showError = (error: Error, insertMessage?: () => void) => {
     if (error && error.message) {
-        console.error("\u001b[31m")
+        console.error("\u001B[31m")
         console.trace(error)
         insertMessage?.()
-        console.error("\u001b[0m")
+        console.error("\u001B[0m")
     }
 
     process.exit(1)
@@ -203,7 +202,7 @@ export const showError = (error: Error, insertMessage?: () => void) => {
  * @returns The file exists
  */
 export const asyncFileIsExists = (filePath: string) => {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
         fs.access(filePath, fs.constants.F_OK, (err) => {
             if (err) {
                 resolve(false)

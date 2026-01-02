@@ -1,10 +1,13 @@
 import execa from "execa"
-import inquirer from "inquirer"
-import semver, { ReleaseType as SemVerReleaseType } from "semver"
 import fs from "fs"
-import path from "path"
+import inquirer from "inquirer"
 import { yellow } from "kolorist"
+import path from "path"
+import semver, { ReleaseType as SemVerReleaseType } from "semver"
 
+import generateChangelog from "./changelog"
+import { validateConfig } from "./config"
+import { ReleaseCliOptions, ReleaseType } from "./types"
 import {
     asyncFileIsExists,
     getBumpVersions,
@@ -15,10 +18,6 @@ import {
     getPromptQuestions,
     showError,
 } from "./utils"
-import generateChangelog from "./changelog"
-import { validateConfig } from "./config"
-
-import { ReleaseCliOptions, ReleaseType } from "./types"
 
 /**
  * Release the project
@@ -41,7 +40,7 @@ async function release(options?: Record<string, any>) {
     try {
         const { stdout: b } = execa.commandSync("git symbolic-ref --short HEAD")
         curBranch = b
-    } catch (error) {
+    } catch {
         return showError(new Error("当前不在git仓库中，请先初始化git仓库"))
     }
 
@@ -57,17 +56,16 @@ async function release(options?: Record<string, any>) {
     if (options?.config) {
         const config = require(path.resolve(getCWD(), options.config))
 
-        if (typeof config === "function") {
-            rawConfig = {
-                ...rawConfig,
-                ...config(),
-            }
-        } else {
-            rawConfig = {
-                ...rawConfig,
-                ...config,
-            }
-        }
+        rawConfig =
+            typeof config === "function"
+                ? {
+                      ...rawConfig,
+                      ...config(),
+                  }
+                : {
+                      ...rawConfig,
+                      ...config,
+                  }
     } else {
         const releaseCliConfig = getPackageJson().releaseCliConfig
 
@@ -79,7 +77,7 @@ async function release(options?: Record<string, any>) {
         }
     }
 
-    // 使用 zod 验证配置
+    // 使用 superstruct 验证配置
     let mergedConfig: ReleaseCliOptions
     try {
         mergedConfig = validateConfig(rawConfig)
@@ -152,7 +150,7 @@ async function release(options?: Record<string, any>) {
         `npm view ${getPackageJson().name} version`,
     )
 
-    if (npmPackageVersion && semver.gt(version, npmPackageVersion)) {
+    if (npmPackageVersion && semver.eq(version, npmPackageVersion)) {
         return showError(
             new Error(
                 `npm包 ${getPackageJson().name} 已存在该版本，请重新输入`,

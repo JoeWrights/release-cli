@@ -33,7 +33,7 @@
         "superstruct": "^2.0.2"
     },
     "devDependencies": {
-        "@joewrights/presets": "^1.0.0",
+        "@joewrights/presets": "1.0.1-alpha.0",
         "@types/conventional-changelog": "3.1.1",
         "@types/inquirer": "9.0.3",
         "@types/node": "20.12.12",
@@ -51,8 +51,13 @@
         "test": {
             "environment": "node",
             "globals": true,
-            "include": ["test/**/*.{test,spec}.{js,ts}"],
-            "exclude": ["node_modules", "lib"],
+            "include": [
+                "test/**/*.{test,spec}.{js,ts}"
+            ],
+            "exclude": [
+                "node_modules",
+                "lib"
+            ],
             "testTimeout": 10000,
             "hookTimeout": 10000
         }

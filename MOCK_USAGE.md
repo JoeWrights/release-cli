@@ -7,6 +7,7 @@
 ### 工作原理
 
 当你在测试文件中使用 `vi.mock('module-name')` 时，Vitest 会：
+
 1. 首先查找 `__mocks__/module-name.ts` 文件
 2. 如果找到，使用该文件作为 Mock 实现
 3. 如果没有找到，会创建一个自动 Mock
@@ -14,9 +15,11 @@
 ### 当前项目中的 Mock 文件
 
 #### 1. `__mocks__/execa.ts`
+
 用于 Mock `execa` 模块（执行命令行命令）
 
 **使用方式：**
+
 ```typescript
 import { vi } from "vitest"
 import execa from "execa"
@@ -29,7 +32,7 @@ const mockExeca = execa as any
 
 // 设置 commandSync 的返回值
 mockExeca.commandSync.mockReturnValue({
-    stdout: "main"
+    stdout: "main",
 })
 
 // 或者让它抛出错误
@@ -39,9 +42,11 @@ mockExeca.commandSync.mockImplementation(() => {
 ```
 
 #### 2. `__mocks__/inquirer.ts`
+
 用于 Mock `inquirer` 模块（交互式命令行输入）
 
 **使用方式：**
+
 ```typescript
 import { vi } from "vitest"
 import inquirer from "inquirer"
@@ -56,19 +61,20 @@ mockInquirer.prompt.mockResolvedValue({
     bump: "patch",
     preRelease: undefined,
     customVersion: undefined,
-    yes: true
+    yes: true,
 })
 ```
 
 ## 为什么这些文件目前没有被使用？
 
 1. **当前测试文件主要测试纯函数**：
-   - `config.test.ts` - 只测试配置验证，不涉及 execa 或 inquirer
-   - `utils.test.ts` - 只测试工具函数，不涉及这些模块
+
+    - `config.test.ts` - 只测试配置验证，不涉及 execa 或 inquirer
+    - `utils.test.ts` - 只测试工具函数，不涉及这些模块
 
 2. **这些 Mock 是为未来测试准备的**：
-   - 当需要测试 `release.ts` 时，这些 Mock 就会派上用场
-   - 当需要测试 `changelog.ts` 时，也需要这些 Mock
+    - 当需要测试 `release.ts` 时，这些 Mock 就会派上用场
+    - 当需要测试 `changelog.ts` 时，也需要这些 Mock
 
 ## 完整使用示例
 
@@ -97,26 +103,26 @@ const mockFs = fs as any
 describe("release", () => {
     beforeEach(() => {
         vi.clearAllMocks()
-        
+
         // 设置默认的 Mock 返回值
         mockExeca.commandSync.mockReturnValue({
-            stdout: "main"
+            stdout: "main",
         })
-        
+
         mockFs.access.mockImplementation((path, mode, callback) => {
             callback(null) // 文件存在
         })
-        
+
         mockFs.readFileSync.mockReturnValue(
-            JSON.stringify({ version: "1.0.0", name: "test-package" })
+            JSON.stringify({ version: "1.0.0", name: "test-package" }),
         )
     })
 
     it("应该检查当前分支", async () => {
         mockExeca.commandSync.mockReturnValueOnce({
-            stdout: "main"
+            stdout: "main",
         })
-        
+
         // 测试代码...
     })
 })
@@ -124,7 +130,6 @@ describe("release", () => {
 
 ## 总结
 
-- `__mocks__` 文件夹中的文件**不会自动生效**，需要在测试文件中使用 `vi.mock()` 来启用
-- 这些文件是**预留给未来测试使用的**，特别是测试 `release.ts` 和 `changelog.ts` 时
-- 使用 Mock 可以避免在测试中实际执行 Git 命令或等待用户输入
-
+-   `__mocks__` 文件夹中的文件**不会自动生效**，需要在测试文件中使用 `vi.mock()` 来启用
+-   这些文件是**预留给未来测试使用的**，特别是测试 `release.ts` 和 `changelog.ts` 时
+-   使用 Mock 可以避免在测试中实际执行 Git 命令或等待用户输入

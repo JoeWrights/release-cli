@@ -1,13 +1,17 @@
-import { describe, it, expect } from "vitest"
+import { describe, expect, it } from "vitest"
+
 import { BUMPS, PRE_RELEASE } from "../src/constants"
-import { ReleaseType, PreReleaseType } from "../src/types"
+import { PreReleaseType, ReleaseType } from "../src/types"
 
 describe("constants 模块", () => {
     describe("BUMPS", () => {
         it("应该包含所有版本类型", () => {
             console.log("📝 测试：BUMPS 常量")
             console.log("📦 BUMPS 数量：", BUMPS.length)
-            console.log("📋 BUMPS 内容：", BUMPS.map((b) => ({ type: b.type, intro: b.intro })))
+            console.log(
+                "📋 BUMPS 内容：",
+                BUMPS.map((b) => ({ type: b.type, intro: b.intro })),
+            )
 
             expect(BUMPS).toHaveLength(4)
             const types = BUMPS.map((b) => b.type)
@@ -74,17 +78,13 @@ describe("constants 模块", () => {
             )
             expect(alpha?.intro).toContain("alpha")
 
-            const beta = PRE_RELEASE.find(
-                (p) => p.type === PreReleaseType.BETA,
-            )
+            const beta = PRE_RELEASE.find((p) => p.type === PreReleaseType.BETA)
             expect(beta?.intro).toContain("beta")
 
             const rc = PRE_RELEASE.find((p) => p.type === PreReleaseType.RC)
             expect(rc?.intro).toContain("rc")
 
-            const next = PRE_RELEASE.find(
-                (p) => p.type === PreReleaseType.NEXT,
-            )
+            const next = PRE_RELEASE.find((p) => p.type === PreReleaseType.NEXT)
             expect(next?.intro).toContain("next")
 
             const experimental = PRE_RELEASE.find(
@@ -94,4 +94,3 @@ describe("constants 模块", () => {
         })
     })
 })
-

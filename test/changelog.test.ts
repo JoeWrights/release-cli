@@ -1,4 +1,7 @@
-import { describe, it, expect, vi, beforeEach } from "vitest"
+import cc from "conventional-changelog"
+import execa from "execa"
+import { beforeEach, describe, expect, it, vi } from "vitest"
+
 import generateChangelog from "../src/changelog"
 
 // Mock 依赖
@@ -8,7 +11,7 @@ vi.mock("../src/utils", () => ({
     getChangelogFileStream: vi.fn(() => ({
         write: vi.fn(),
         end: vi.fn(),
-        on: vi.fn((event: string, callback: Function) => {
+        on: vi.fn((event: string, callback: () => void) => {
             if (event === "close") {
                 // 模拟流关闭事件
                 setTimeout(() => callback(), 0)
@@ -21,9 +24,6 @@ vi.mock("../src/utils", () => ({
         }),
     })),
 }))
-
-import execa from "execa"
-import cc from "conventional-changelog"
 
 const mockExeca = execa as any
 const mockCc = cc as any
@@ -38,12 +38,12 @@ describe("changelog 模块", () => {
         })
 
         // Mock execa (异步调用)
-        mockExeca.mockResolvedValue(undefined)
+        mockExeca.mockResolvedValue()
 
         // Mock conventional-changelog 返回一个可读流
         const mockStream = {
             pipe: vi.fn().mockReturnThis(),
-            on: vi.fn((event: string, callback: Function) => {
+            on: vi.fn((event: string, callback: () => void) => {
                 if (event === "close") {
                     setTimeout(() => callback(), 0)
                 }
@@ -67,10 +67,16 @@ describe("changelog 模块", () => {
 
             await generateChangelog(version, options)
 
-            console.log("✅ conventional-changelog 调用次数：", mockCc.mock.calls.length)
+            console.log(
+                "✅ conventional-changelog 调用次数：",
+                mockCc.mock.calls.length,
+            )
             expect(mockCc).toHaveBeenCalled()
             const ccConfig = mockCc.mock.calls[0][0]
-            console.log("📋 changelog 配置：", JSON.stringify(ccConfig, null, 2))
+            console.log(
+                "📋 changelog 配置：",
+                JSON.stringify(ccConfig, null, 2),
+            )
             expect(ccConfig).toMatchObject({
                 preset: "angular",
                 releaseCount: 0,
@@ -105,7 +111,7 @@ describe("changelog 模块", () => {
             let streamClosed = false
             const mockStream = {
                 pipe: vi.fn().mockReturnThis(),
-                on: vi.fn((event: string, callback: Function) => {
+                on: vi.fn((event: string, callback: () => void) => {
                     if (event === "close") {
                         streamClosed = true
                         // 立即调用回调
@@ -137,7 +143,7 @@ describe("changelog 模块", () => {
             // 模拟流立即关闭
             const mockStream = {
                 pipe: vi.fn().mockReturnThis(),
-                on: vi.fn((event: string, callback: Function) => {
+                on: vi.fn((event: string, callback: () => void) => {
                     if (event === "close") {
                         setImmediate(() => callback())
                     }
@@ -166,7 +172,7 @@ describe("changelog 模块", () => {
 
             const mockStream = {
                 pipe: vi.fn().mockReturnThis(),
-                on: vi.fn((event: string, callback: Function) => {
+                on: vi.fn((event: string, callback: () => void) => {
                     if (event === "close") {
                         setImmediate(() => callback())
                     }
@@ -181,8 +187,10 @@ describe("changelog 模块", () => {
             await new Promise((resolve) => setTimeout(resolve, 50))
 
             // 应该调用 tag 相关命令
-            const execaCalls = mockExeca.mock.calls.map((call: any[]) => call[0])
-            expect(execaCalls.some((cmd) => cmd === "git")).toBe(true)
+            const execaCalls = mockExeca.mock.calls.map(
+                (call: any[]) => call[0],
+            )
+            expect(execaCalls.includes("git")).toBe(true)
         })
 
         it("应该使用 tagSuffix 如果提供", async () => {
@@ -195,7 +203,7 @@ describe("changelog 模块", () => {
 
             const mockStream = {
                 pipe: vi.fn().mockReturnThis(),
-                on: vi.fn((event: string, callback: Function) => {
+                on: vi.fn((event: string, callback: () => void) => {
                     if (event === "close") {
                         setImmediate(() => callback())
                     }
@@ -217,4 +225,3 @@ describe("changelog 模块", () => {
         })
     })
 })
-

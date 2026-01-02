@@ -7,6 +7,10 @@ import * as path from "path"
 vi.mock("execa")
 vi.mock("inquirer")
 vi.mock("fs")
+vi.mock("conventional-changelog")
+vi.mock("../src/changelog", () => ({
+    default: vi.fn().mockResolvedValue(undefined),
+}))
 vi.mock("../src/utils", async () => {
     const actual = await vi.importActual("../src/utils")
     return {
@@ -26,6 +30,20 @@ vi.mock("../src/utils", async () => {
             curVersion: "1.0.0",
         })),
         getPromptQuestions: vi.fn(),
+        getChangelogFileStream: vi.fn(() => ({
+            write: vi.fn(),
+            end: vi.fn(),
+            on: vi.fn((event: string, callback: Function) => {
+                if (event === "close") {
+                    setTimeout(() => callback(), 0)
+                }
+                return {
+                    write: vi.fn(),
+                    end: vi.fn(),
+                    on: vi.fn(),
+                }
+            }),
+        })),
     }
 })
 
@@ -332,11 +350,6 @@ describe("release 函数", () => {
                 }
                 return { stdout: "" }
             })
-
-            // Mock generateChangelog 立即完成
-            vi.doMock("./changelog", () => ({
-                default: vi.fn().mockResolvedValue(undefined),
-            }))
 
             mockInquirer.prompt.mockResolvedValue({
                 yes: true,

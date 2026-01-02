@@ -1,4 +1,14 @@
-import { object, boolean, string, array, number, optional, defaulted, Infer } from "superstruct"
+import {
+    array,
+    boolean,
+    defaulted,
+    Infer,
+    number,
+    object,
+    optional,
+    string,
+    StructError,
+} from "superstruct"
 
 /**
  * Release CLI 配置 Schema
@@ -45,16 +55,21 @@ export type ReleaseCliConfig = Infer<typeof releaseCliConfigSchema>
 export function validateConfig(config: unknown): ReleaseCliConfig {
     try {
         return releaseCliConfigSchema.create(config)
-    } catch (error: any) {
-        if (error && typeof error.failures === "function") {
+    } catch (error) {
+        if (
+            error instanceof StructError &&
+            typeof error.failures === "function"
+        ) {
             const failures = error.failures()
             if (Array.isArray(failures) && failures.length > 0) {
                 const errorMessages = failures
-                    .map((failure: any) => {
+                    .map((failure) => {
                         const path = Array.isArray(failure.path)
                             ? failure.path.join(".")
                             : failure.path || "root"
-                        return `  - ${path}: ${failure.message || failure.explanation || "验证失败"}`
+                        return `  - ${path}: ${failure.message ||
+                            failure.explanation ||
+                            "验证失败"}`
                     })
                     .join("\n")
                 throw new Error(
@@ -64,7 +79,8 @@ export function validateConfig(config: unknown): ReleaseCliConfig {
         }
         // 如果没有 failures，使用错误消息
         throw new Error(
-            `配置验证失败: ${error?.message || "未知错误"}\n\n请检查配置文件格式是否正确。`,
+            `配置验证失败: ${(error instanceof Error && error?.message) ||
+                "未知错误"}\n\n请检查配置文件格式是否正确。`,
         )
     }
 }
@@ -74,7 +90,9 @@ export function validateConfig(config: unknown): ReleaseCliConfig {
  * @param config 原始配置对象
  * @returns 验证结果，包含 success 和 data/error
  */
-export function safeValidateConfig(config: unknown): {
+export function safeValidateConfig(
+    config: unknown,
+): {
     success: boolean
     data?: ReleaseCliConfig
     error?: string
@@ -82,16 +100,21 @@ export function safeValidateConfig(config: unknown): {
     try {
         const data = releaseCliConfigSchema.create(config)
         return { success: true, data }
-    } catch (error: any) {
-        if (error && typeof error.failures === "function") {
+    } catch (error) {
+        if (
+            error instanceof StructError &&
+            typeof error.failures === "function"
+        ) {
             const failures = error.failures()
             if (Array.isArray(failures) && failures.length > 0) {
                 const errorMessages = failures
-                    .map((failure: any) => {
+                    .map((failure) => {
                         const path = Array.isArray(failure.path)
                             ? failure.path.join(".")
                             : failure.path || "root"
-                        return `  - ${path}: ${failure.message || failure.explanation || "验证失败"}`
+                        return `  - ${path}: ${failure.message ||
+                            failure.explanation ||
+                            "验证失败"}`
                     })
                     .join("\n")
                 return {
@@ -102,7 +125,7 @@ export function safeValidateConfig(config: unknown): {
         }
         return {
             success: false,
-            error: error instanceof Error ? error.message : "配置验证失败",
+            error: (error instanceof Error && error.message) || "配置验证失败",
         }
     }
 }

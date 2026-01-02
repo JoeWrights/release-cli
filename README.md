@@ -4,12 +4,12 @@
 
 ## 功能特性
 
-- 🚀 **版本号管理**：支持 major、minor、patch、prelease 和自定义版本号
-- 📝 **自动生成 Changelog**：基于 conventional-changelog 自动生成更新日志
-- 🔨 **自动构建**：可配置是否在发布前自动执行构建命令
-- 🏷️ **自动打 Tag**：可配置是否自动创建并推送 Git tag
-- 🛡️ **安全检查**：检查 Git 状态、分支黑名单、npm 包版本冲突等
-- ⚙️ **灵活配置**：支持通过配置文件或 package.json 进行配置
+-   🚀 **版本号管理**：支持 major、minor、patch、prelease 和自定义版本号
+-   📝 **自动生成 Changelog**：基于 conventional-changelog 自动生成更新日志
+-   🔨 **自动构建**：可配置是否在发布前自动执行构建命令
+-   🏷️ **自动打 Tag**：可配置是否自动创建并推送 Git tag
+-   🛡️ **安全检查**：检查 Git 状态、分支黑名单、npm 包版本冲突等
+-   ⚙️ **灵活配置**：支持通过配置文件或 package.json 进行配置
 
 ## 安装
 
@@ -56,15 +56,15 @@ release-cli --config release.config.js
 
 ```json
 {
-  "name": "your-package",
-  "version": "1.0.0",
-  "releaseCliConfig": {
-    "autoBuild": true,
-    "autoTag": false,
-    "tagSuffix": "",
-    "branchBlacklist": ["master", "main"],
-    "packageJsonFileIndent": 4
-  }
+    "name": "your-package",
+    "version": "1.0.0",
+    "releaseCliConfig": {
+        "autoBuild": true,
+        "autoTag": false,
+        "tagSuffix": "",
+        "branchBlacklist": ["master", "main"],
+        "packageJsonFileIndent": 4
+    }
 }
 ```
 
@@ -74,11 +74,11 @@ release-cli --config release.config.js
 
 ```javascript
 module.exports = {
-  autoBuild: true,
-  autoTag: false,
-  tagSuffix: "",
-  branchBlacklist: ["master", "main"],
-  packageJsonFileIndent: 4
+    autoBuild: true,
+    autoTag: false,
+    tagSuffix: "",
+    branchBlacklist: ["master", "main"],
+    packageJsonFileIndent: 4,
 }
 ```
 
@@ -86,20 +86,20 @@ module.exports = {
 
 ```javascript
 module.exports = () => {
-  return {
-    autoBuild: true,
-    autoTag: false,
-    tagSuffix: "",
-    branchBlacklist: ["master", "main"],
-    packageJsonFileIndent: 4
-  }
+    return {
+        autoBuild: true,
+        autoTag: false,
+        tagSuffix: "",
+        branchBlacklist: ["master", "main"],
+        packageJsonFileIndent: 4,
+    }
 }
 ```
 
 ### 配置选项说明
 
 | 选项 | 类型 | 默认值 | 说明 |
-|------|------|--------|------|
+| --- | --- | --- | --- |
 | `autoBuild` | `boolean` | `true` | 是否在发布前自动执行 `npm run build` |
 | `autoTag` | `boolean` | `false` | 是否自动创建并推送 Git tag |
 | `tagSuffix` | `string` | `""` | Tag 后缀，例如：`-stable` |
@@ -110,54 +110,57 @@ module.exports = () => {
 
 ```javascript
 {
-  branchBlacklist: [
-    "master",
-    "main",
-    "/^release\\/.*$/"  // 使用正则表达式匹配所有 release/* 分支
-  ]
+    branchBlacklist: [
+        "master",
+        "main",
+        "/^release\\/.*$/", // 使用正则表达式匹配所有 release/* 分支
+    ]
 }
 ```
 
 ## 发布流程
 
 1. **环境检查**
-   - 检查是否存在 `package.json` 文件
-   - 检查是否在 Git 仓库中
-   - 检查当前分支是否在黑名单中
-   - 检查是否有未提交的文件
+
+    - 检查是否存在 `package.json` 文件
+    - 检查是否在 Git 仓库中
+    - 检查当前分支是否在黑名单中
+    - 检查是否有未提交的文件
 
 2. **版本选择**
-   - 选择版本类型（major、minor、patch、prelease、custom）
-   - 如果选择 prelease，需要选择预发布类型（alpha、beta、rc、next、experimental）
-   - 如果选择 custom，需要输入自定义版本号
+
+    - 选择版本类型（major、minor、patch、prelease、custom）
+    - 如果选择 prelease，需要选择预发布类型（alpha、beta、rc、next、experimental）
+    - 如果选择 custom，需要输入自定义版本号
 
 3. **版本验证**
-   - 验证版本号格式
-   - 检查 npm 包是否已存在该版本
+
+    - 验证版本号格式
+    - 检查 npm 包是否已存在该版本
 
 4. **执行发布**
-   - 更新 `package.json` 中的版本号
-   - 生成 `CHANGELOG.md`
-   - 提交更改到 Git
-   - 推送到远程仓库
-   - 如果启用 `autoBuild`，执行构建命令
-   - 如果启用 `autoTag`，创建并推送 Git tag
+    - 更新 `package.json` 中的版本号
+    - 生成 `CHANGELOG.md`
+    - 提交更改到 Git
+    - 推送到远程仓库
+    - 如果启用 `autoBuild`，执行构建命令
+    - 如果启用 `autoTag`，创建并推送 Git tag
 
 ## 版本类型说明
 
-- **major（大版本）**：可能包含不兼容的变更，例如 `1.0.0` → `2.0.0`
-- **minor（小版本）**：可能包含新的功能或优化，例如 `1.0.0` → `1.1.0`
-- **patch（补丁版本）**：兼容老版本，只是修复一些 bug，例如 `1.0.0` → `1.0.1`
-- **prelease（预发布版本）**：预发布版本，例如 `1.0.0` → `1.0.1-alpha.0`
-- **custom（自定义版本）**：手动输入版本号
+-   **major（大版本）**：可能包含不兼容的变更，例如 `1.0.0` → `2.0.0`
+-   **minor（小版本）**：可能包含新的功能或优化，例如 `1.0.0` → `1.1.0`
+-   **patch（补丁版本）**：兼容老版本，只是修复一些 bug，例如 `1.0.0` → `1.0.1`
+-   **prelease（预发布版本）**：预发布版本，例如 `1.0.0` → `1.0.1-alpha.0`
+-   **custom（自定义版本）**：手动输入版本号
 
 ## 预发布类型
 
-- **alpha**：内测版本
-- **beta**：公测版本
-- **rc**：候选版本
-- **next**：下一个版本
-- **experimental**：实验版本
+-   **alpha**：内测版本
+-   **beta**：公测版本
+-   **rc**：候选版本
+-   **next**：下一个版本
+-   **experimental**：实验版本
 
 ## 注意事项
 
@@ -193,4 +196,3 @@ MIT
 ## 作者
 
 Joe Wright (1035208578@qq.com)
-

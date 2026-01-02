@@ -1,16 +1,17 @@
-import { describe, it, expect, vi, beforeEach } from "vitest"
-import * as fs from "fs"
-import * as path from "path"
+import fs from "fs"
+import path from "path"
+import { beforeEach, describe, expect, it, vi } from "vitest"
+
 import {
-    getCWD,
-    getPackageJsonPath,
-    getChangeLogPath,
-    getPackageJson,
-    getChangelogFileStream,
-    getParsedConfigJsonData,
-    getBumpVersions,
-    getBumpChoices,
     asyncFileIsExists,
+    getBumpChoices,
+    getBumpVersions,
+    getChangelogFileStream,
+    getChangeLogPath,
+    getCWD,
+    getPackageJson,
+    getPackageJsonPath,
+    getParsedConfigJsonData,
 } from "../src/utils"
 
 // Mock fs 模块
@@ -195,9 +196,12 @@ describe("工具函数", () => {
             console.log("📝 测试：asyncFileIsExists - 文件存在")
             const filePath = "/path/to/file"
             console.log("📂 检查文件：", filePath)
-
             ;(fs.access as any).mockImplementation(
-                (path: string, mode: number, callback: Function) => {
+                (
+                    path: string,
+                    mode: number,
+                    callback: (value: null) => void,
+                ) => {
                     callback(null) // 没有错误，文件存在
                 },
             )
@@ -218,9 +222,12 @@ describe("工具函数", () => {
             console.log("📝 测试：asyncFileIsExists - 文件不存在")
             const filePath = "/path/to/nonexistent"
             console.log("📂 检查文件：", filePath)
-
             ;(fs.access as any).mockImplementation(
-                (path: string, mode: number, callback: Function) => {
+                (
+                    path: string,
+                    mode: number,
+                    callback: (value: Error) => void,
+                ) => {
                     callback(new Error("File not found")) // 有错误，文件不存在
                 },
             )
@@ -233,4 +240,3 @@ describe("工具函数", () => {
         })
     })
 })
-

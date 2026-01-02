@@ -1,12 +1,12 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from "vitest"
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest"
+
 import run from "../src/index"
+import release from "../src/release"
 
 // Mock release 模块
 vi.mock("../src/release", () => ({
     default: vi.fn(),
 }))
-
-import release from "../src/release"
 
 const mockRelease = release as any
 
@@ -28,7 +28,7 @@ describe("index 模块", () => {
     describe("run 函数", () => {
         it("应该调用 release 函数", () => {
             console.log("📝 测试：run 函数调用 release")
-            mockRelease.mockResolvedValue(undefined)
+            mockRelease.mockResolvedValue()
 
             run({})
 
@@ -39,7 +39,7 @@ describe("index 模块", () => {
         })
 
         it("应该传递选项给 release 函数", () => {
-            mockRelease.mockResolvedValue(undefined)
+            mockRelease.mockResolvedValue()
 
             const options = { config: "./release.config.js" }
             run(options)
@@ -48,7 +48,7 @@ describe("index 模块", () => {
         })
 
         it("应该处理 release 成功的情况", async () => {
-            mockRelease.mockResolvedValue(undefined)
+            mockRelease.mockResolvedValue()
 
             run({})
 
@@ -85,4 +85,3 @@ describe("index 模块", () => {
         })
     })
 })
-

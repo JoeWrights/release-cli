@@ -94,18 +94,18 @@ async function generateChangelog(version: string, options: ReleaseCliOptions) {
                 return pkg
             },
         },
-        transform: (commit) => {
-            // 将提交类型转换为对应的显示名称
-            // 这个 transform 在 preset 的 writerOpts.transform 之前执行
-            if (commit.type && types[commit.type]) {
-                commit.type = types[commit.type]
-            } else if (commit.type) {
-                // 如果类型不在映射中，首字母大写
-                commit.type =
-                    commit.type.charAt(0).toUpperCase() + commit.type.slice(1)
-            }
-            return commit
-        },
+        // transform: (commit) => {
+        //     // 将提交类型转换为对应的显示名称
+        //     // 这个 transform 在 preset 的 writerOpts.transform 之前执行
+        //     if (commit.type && types[commit.type]) {
+        //         commit.type = types[commit.type]
+        //     } else if (commit.type) {
+        //         // 如果类型不在映射中，首字母大写
+        //         commit.type =
+        //             commit.type.charAt(0).toUpperCase() + commit.type.slice(1)
+        //     }
+        //     return commit
+        // },
         // config: {
         //     writerOpts: {
         //         // 只覆盖排序相关的选项，不覆盖 transform

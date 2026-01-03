@@ -1,4 +1,4 @@
-## v1.0.16 (2026-01-03)
+## v1.0.17-alpha.0 (2026-01-03)
 
 
 ### ♻️ Code Refactoring
@@ -72,6 +72,7 @@
 * v1.0.14-alpha.0 changelog [ci skip] ([9be2400](https://github.com/JoeWrights/release-cli/commit/9be2400d109be48922e32fd9e6dc008d49bb400b))
 * v1.0.15 changelog [ci skip] ([5cee12e](https://github.com/JoeWrights/release-cli/commit/5cee12ece7410ec9db9c5fd85d85c4cdfae04721))
 * v1.0.15-alpha.0 changelog [ci skip] ([8c0e413](https://github.com/JoeWrights/release-cli/commit/8c0e41308d719d489047cc530be81de57cf40a4d))
+* v1.0.16 changelog [ci skip] ([a7cb975](https://github.com/JoeWrights/release-cli/commit/a7cb9750c16451d6d4259afb530277d8020da00b))
 * v1.0.16-alpha.0 changelog [ci skip] ([99d1ca4](https://github.com/JoeWrights/release-cli/commit/99d1ca48f392a01545315bbd4e42868068036326))
 * v1.0.2 changelog [ci skip] ([f994736](https://github.com/JoeWrights/release-cli/commit/f994736d462ee150d8bf0fa11e6298a3224c987f))
 * v1.0.2-alpha.0 changelog [ci skip] ([5328162](https://github.com/JoeWrights/release-cli/commit/5328162742cc01257a334fc220c09cddcb372605))

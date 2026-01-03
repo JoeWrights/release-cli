@@ -64,34 +64,6 @@ async function generateChangelog(version: string, options: ReleaseCliOptions) {
         ...(options.commitTypeDisplayName || {}),
     }
 
-    // 定义排序顺序（按优先级排序）
-    const typeOrder = [
-        typeDisplayName[CommitType.FEAT],
-        typeDisplayName[CommitType.FIX],
-        typeDisplayName[CommitType.PERF],
-        typeDisplayName[CommitType.REFACTOR],
-        typeDisplayName[CommitType.STYLE],
-        typeDisplayName[CommitType.CHORE],
-        typeDisplayName[CommitType.TYPES],
-        typeDisplayName[CommitType.I18N],
-        typeDisplayName[CommitType.DEPS],
-        typeDisplayName[CommitType.TEST],
-        typeDisplayName[CommitType.BUILD],
-        typeDisplayName[CommitType.CI],
-        typeDisplayName[CommitType.REVERT],
-        typeDisplayName[CommitType.DOCS],
-        typeDisplayName[CommitType.SECURITY],
-        typeDisplayName[CommitType.ACCESSIBILITY],
-    ].filter(Boolean)
-
-    // 创建类型名称到排序权重的映射（用于快速查找排序顺序）
-    const typeSortMap = new Map<string, number>()
-    typeOrder.forEach((type, index) => {
-        if (type) {
-            typeSortMap.set(type, index)
-        }
-    })
-
     // 加载 angular preset 配置（angularPreset 本身就是一个 Promise）
     const angularConfig = await angularPreset
 
@@ -202,15 +174,6 @@ async function generateChangelog(version: string, options: ReleaseCliOptions) {
                     // 返回 commit（保留所有类型，不进行过滤）
                     return commit
                 },
-                groupBy: "type",
-                // 使用极简的排序函数，直接从 title 对应的 Map 中查找
-                // 避免访问 commits 数组，提升性能
-                commitGroupsSort: (a: any, b: any) => {
-                    const aSort = typeSortMap.get(a.title) ?? 9999
-                    const bSort = typeSortMap.get(b.title) ?? 9999
-                    return aSort - bSort
-                },
-                commitsSort: ["scope", "subject"],
             },
         },
     })

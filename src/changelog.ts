@@ -64,26 +64,6 @@ async function generateChangelog(version: string, options: ReleaseCliOptions) {
         ...(options.commitTypeDisplayName || {}),
     }
 
-    // 定义排序顺序
-    const typeOrder = [
-        typeDisplayName[CommitType.FEAT],
-        typeDisplayName[CommitType.FIX],
-        typeDisplayName[CommitType.PERF],
-        typeDisplayName[CommitType.REFACTOR],
-        typeDisplayName[CommitType.STYLE],
-        typeDisplayName[CommitType.TYPES],
-        typeDisplayName[CommitType.I18N],
-        typeDisplayName[CommitType.DEPS],
-        typeDisplayName[CommitType.TEST],
-        typeDisplayName[CommitType.BUILD],
-        typeDisplayName[CommitType.CI],
-        typeDisplayName[CommitType.REVERT],
-        typeDisplayName[CommitType.DOCS],
-        typeDisplayName[CommitType.CHORE],
-        typeDisplayName[CommitType.SECURITY],
-        typeDisplayName[CommitType.ACCESSIBILITY],
-    ]
-
     // 加载 angular preset 配置（angularPreset 本身就是一个 Promise）
     const angularConfig = await angularPreset
 
@@ -191,22 +171,6 @@ async function generateChangelog(version: string, options: ReleaseCliOptions) {
                     // 返回 commit（保留所有类型，不进行过滤）
                     return commit
                 },
-                groupBy: "type",
-                commitGroupsSort: (a, b) => {
-                    const aIndex = typeOrder.indexOf(`${a.title}`)
-                    const bIndex = typeOrder.indexOf(`${b.title}`)
-                    if (aIndex === -1 && bIndex === -1) {
-                        return `${a.title}`.localeCompare(`${b.title}`)
-                    }
-                    if (aIndex === -1) {
-                        return 1
-                    }
-                    if (bIndex === -1) {
-                        return -1
-                    }
-                    return aIndex - bIndex
-                },
-                commitsSort: ["scope", "subject"],
             },
         },
     })

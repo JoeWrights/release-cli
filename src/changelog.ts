@@ -5,6 +5,9 @@ import execa from "execa"
 import { ReleaseCliOptions } from "./types"
 import { getChangelogFileStream } from "./utils"
 
+// 动态导入 angular preset
+const angularPreset = require("conventional-changelog-angular")
+
 /**
  * Execute the git command
  * @param version The version
@@ -83,31 +86,107 @@ async function generateChangelog(version: string, options: ReleaseCliOptions) {
         "Reverts",
     ]
 
+    // 加载 angular preset 配置（angularPreset 本身就是一个 Promise）
+    const angularConfig = await angularPreset
+
     cc({
-        preset: "angular",
         releaseCount: 0,
         pkg: {
-            transform: (pkg) => {
+            transform: (pkg: Record<string, any>) => {
                 pkg.version = `v${version}`
                 return pkg
             },
         },
-        transform: (commit) => {
-            // 将提交类型转换为对应的显示名称
-            if (commit.type && types[commit.type]) {
-                commit.type = types[commit.type]
-            } else if (commit.type) {
-                // 如果类型不在映射中，首字母大写
-                commit.type =
-                    commit.type.charAt(0).toUpperCase() + commit.type.slice(1)
-            }
-
-            return commit
-        },
         config: {
+            parserOpts: angularConfig.parserOpts,
             writerOpts: {
+                ...angularConfig.writerOpts,
+                transform: (commit: any, context: any) => {
+                    // 首先处理 BREAKING CHANGES
+                    if (commit.notes && commit.notes.length > 0) {
+                        commit.notes.forEach((note: any) => {
+                            note.title = "BREAKING CHANGES"
+                        })
+                    }
+
+                    // 处理 revert 类型（需要在类型转换之前处理）
+                    if (commit.revert) {
+                        commit.type = types.revert || "Reverts"
+                    }
+
+                    // 将提交类型转换为对应的显示名称
+                    // 重要：先转换类型，确保所有类型都被识别和保留
+                    if (commit.type && types[commit.type]) {
+                        commit.type = types[commit.type]
+                    } else if (commit.type) {
+                        // 如果类型不在映射中，首字母大写
+                        commit.type =
+                            commit.type.charAt(0).toUpperCase() +
+                            commit.type.slice(1)
+                    }
+
+                    // 如果没有类型，跳过这个提交（可能是 merge commit 等）
+                    if (!commit.type) {
+                        return
+                    }
+
+                    // 处理 scope
+                    if (commit.scope === "*") {
+                        commit.scope = ""
+                    }
+
+                    // 处理 shortHash
+                    if (typeof commit.hash === "string") {
+                        commit.shortHash = commit.hash.slice(0, 7)
+                    }
+
+                    // 处理 subject 中的 issue 链接和用户提及
+                    if (typeof commit.subject === "string") {
+                        const issues: string[] = []
+                        let url = context.repository
+                            ? `${context.host}/${context.owner}/${context.repository}`
+                            : context.repoUrl
+
+                        if (url) {
+                            url = `${url}/issues/`
+                            // Issue URLs
+                            commit.subject = commit.subject.replace(
+                                /#(\d+)/g,
+                                (_: string, issue: string) => {
+                                    issues.push(issue)
+                                    return `[#${issue}](${url}${issue})`
+                                },
+                            )
+                        }
+
+                        if (context.host) {
+                            // User URLs
+                            commit.subject = commit.subject.replace(
+                                /\B@([\da-z](?:-?[\da-z]){0,38})/g,
+                                (_: string, username: string) => {
+                                    if (username.includes(".")) {
+                                        return `@${username}`
+                                    }
+                                    return `[@${username}](${context.host}/${username})`
+                                },
+                            )
+                        }
+
+                        // 移除已经处理的 references
+                        if (commit.references) {
+                            commit.references = commit.references.filter(
+                                (ref: any) => {
+                                    return !issues.includes(ref.issue)
+                                },
+                            )
+                        }
+                    }
+
+                    // 返回 commit（保留所有类型，不进行过滤）
+                    return commit
+                },
                 groupBy: "type",
-                commitGroupsSort: (a, b) => {
+                commitGroupsSort: (a: any, b: any) => {
                     const aIndex = typeOrder.indexOf(`${a.title}`)
                     const bIndex = typeOrder.indexOf(`${b.title}`)
                     if (aIndex === -1 && bIndex === -1) {

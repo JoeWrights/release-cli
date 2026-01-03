@@ -193,12 +193,6 @@ async function generateChangelog(version: string, options: ReleaseCliOptions) {
                 },
                 groupBy: "type",
                 commitGroupsSort: (a: any, b: any) => {
-                    console.log(
-                        JSON.stringify(a, null, 2),
-                        a.title,
-                        JSON.stringify(b, null, 2),
-                        b.title,
-                    )
                     const aIndex = typeOrder.indexOf(`${a.title}`)
                     const bIndex = typeOrder.indexOf(`${b.title}`)
                     if (aIndex === -1 && bIndex === -1) {

@@ -1,4 +1,4 @@
-## v1.0.4 (2026-01-03)
+## v1.0.5 (2026-01-03)
 
 
 ### ✨ Features
@@ -13,12 +13,6 @@
 
 * Introduce CommitType enum and COMMIT_TYPES_DISPLAY_NAME for improved commit type handling in changelog generation ([3f16e0b](https://github.com/JoeWrights/release-cli/commit/3f16e0b4a89057538d0f2c92970817bd6b8795c8))
 * Update changelog generation to use CommitType enum for type display names and define a comprehensive sorting order for commit types ([a8f3c36](https://github.com/JoeWrights/release-cli/commit/a8f3c36b11d4d14dafdc3bcabe6fafbc17ad3d31))
-
-
-### 📝 Documentation
-
-* correct minor typo in README description of CLI tool ([4c39669](https://github.com/JoeWrights/release-cli/commit/4c396692fca080a5fa7b0abef262ae9fc825f4e3))
-* update README to include additional features of the CLI tool ([016275b](https://github.com/JoeWrights/release-cli/commit/016275b2e7395049f29827230cda68b092edc15e))
 
 
 ### 🔧 Chores
@@ -39,12 +33,14 @@
 * enhance changelog transformation logic to include detailed commit processing and maintain type mapping ([ef34935](https://github.com/JoeWrights/release-cli/commit/ef34935e13b620747f0b5bdcac7882c9bf89bcce))
 * fix changelog generation by correcting pipe closure syntax ([a5ca2ae](https://github.com/JoeWrights/release-cli/commit/a5ca2ae1e091e8b65f80f6486ac5e130ff090333))
 * integrate angular preset for enhanced changelog generation and improve commit type handling ([232c71d](https://github.com/JoeWrights/release-cli/commit/232c71d502a18db8f14ec28a52feb05283ce5afe))
+* optimize changelog generation by implementing a Map for type sorting and enhancing the sorting logic ([5c28c89](https://github.com/JoeWrights/release-cli/commit/5c28c89fba5692b69d57e8c816be6bd84294fa5b))
 * refine changelog transformation logic to restore commit type mapping and maintain console logging for debugging ([222f3ff](https://github.com/JoeWrights/release-cli/commit/222f3ffacf0a398a87345b2c397ff826cdeeaf79))
 * remove changelog sorting configuration and related options ([ef14b4f](https://github.com/JoeWrights/release-cli/commit/ef14b4f41ace7aa5f05be5d752de7ec10ae86425))
 * remove CHANGELOG.md as it is no longer needed ([a8cf938](https://github.com/JoeWrights/release-cli/commit/a8cf93807a19a5b846c0afeb0ca03a332342ee5e))
 * remove console logging from changelog generation for cleaner output ([a40acbf](https://github.com/JoeWrights/release-cli/commit/a40acbf75dc9be0e656db9edc6371a9469d14e39))
 * Remove unused dependencies from pnpm-lock.yaml to streamline project and reduce bloat. ([685ec10](https://github.com/JoeWrights/release-cli/commit/685ec106609c8f7a63a0f565db6fc309eac9425e))
 * Update build scripts to use pnpm, adjust ESLint ignore patterns, and streamline package.json for improved dependency management ([25687f2](https://github.com/JoeWrights/release-cli/commit/25687f27a92cb9f9c6b893fcc21a369f40be88f2))
+* update changelog generation to use emoji for commit type display names ([5093cec](https://github.com/JoeWrights/release-cli/commit/5093cecd56095ef79b4bd434dbfac353169f2d49))
 * update changelog transformation logic to include console logging for debugging ([469b136](https://github.com/JoeWrights/release-cli/commit/469b136ceac062f8db509b3904d10d18ea7c0d38))
 * update dependencies for changelog generation and adjust preset loading logic ([135d889](https://github.com/JoeWrights/release-cli/commit/135d889f76d7c8d3cc37c6b813ddc5048076234f))
 * update package.json and improve changelog generation options ([9997354](https://github.com/JoeWrights/release-cli/commit/999735459a22308f2e5294af55561387fdb0f000))
@@ -71,6 +67,13 @@
 * v1.0.2-alpha.24 changelog [ci skip] ([8ebc930](https://github.com/JoeWrights/release-cli/commit/8ebc930a564b2208504aa2d7222be4e871b0ffdc))
 * v1.0.2-alpha.8 changelog [ci skip] ([b2388f6](https://github.com/JoeWrights/release-cli/commit/b2388f6cfbba6ee355f0aa7492a862f680357a94))
 * v1.0.3 changelog [ci skip] ([310274c](https://github.com/JoeWrights/release-cli/commit/310274cdd946b1e27153d13daef5d6e22f859fcd))
+* v1.0.4 changelog [ci skip] ([daec414](https://github.com/JoeWrights/release-cli/commit/daec414fbb5212712a0b6bcb636dfc446d8507cf))
+
+
+### 📝 Documentation
+
+* correct minor typo in README description of CLI tool ([4c39669](https://github.com/JoeWrights/release-cli/commit/4c396692fca080a5fa7b0abef262ae9fc825f4e3))
+* update README to include additional features of the CLI tool ([016275b](https://github.com/JoeWrights/release-cli/commit/016275b2e7395049f29827230cda68b092edc15e))
 
 
 ### Debug

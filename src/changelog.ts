@@ -2,6 +2,7 @@
 import cc from "conventional-changelog"
 import execa from "execa"
 
+import { COMMIT_TYPES_DISPLAY_NAME } from "./constants"
 import { ReleaseCliOptions } from "./types"
 import { getChangelogFileStream } from "./utils"
 
@@ -56,21 +57,6 @@ async function executeGitCommand(version: string, options: ReleaseCliOptions) {
 async function generateChangelog(version: string, options: ReleaseCliOptions) {
     const fileStream = getChangelogFileStream()
 
-    // 扩展支持的提交类型映射
-    const types: Record<string, string> = {
-        feat: "Features",
-        fix: "Bug Fixes",
-        perf: "Performance Improvements",
-        revert: "Reverts",
-        docs: "Documentation",
-        style: "Styles",
-        chore: "Chores",
-        refactor: "Code Refactoring",
-        test: "Tests",
-        build: "Build System",
-        ci: "Continuous Integration",
-    }
-
     // 定义排序顺序
     const typeOrder = [
         "Features",
@@ -111,13 +97,22 @@ async function generateChangelog(version: string, options: ReleaseCliOptions) {
 
                     // 处理 revert 类型（需要在类型转换之前处理）
                     if (commit.revert) {
-                        commit.type = types.revert || "Reverts"
+                        commit.type =
+                            COMMIT_TYPES_DISPLAY_NAME.revert || "Reverts"
                     }
 
                     // 将提交类型转换为对应的显示名称
                     // 重要：先转换类型，确保所有类型都被识别和保留
-                    if (commit.type && types[commit.type]) {
-                        commit.type = types[commit.type]
+                    if (
+                        commit.type &&
+                        COMMIT_TYPES_DISPLAY_NAME[
+                            commit.type as keyof typeof COMMIT_TYPES_DISPLAY_NAME
+                        ]
+                    ) {
+                        commit.type =
+                            COMMIT_TYPES_DISPLAY_NAME[
+                                commit.type as keyof typeof COMMIT_TYPES_DISPLAY_NAME
+                            ]
                     } else if (commit.type) {
                         // 如果类型不在映射中，首字母大写
                         commit.type =
@@ -186,7 +181,7 @@ async function generateChangelog(version: string, options: ReleaseCliOptions) {
                     return commit
                 },
                 groupBy: "type",
-                commitGroupsSort: (a: any, b: any) => {
+                commitGroupsSort: (a, b) => {
                     const aIndex = typeOrder.indexOf(`${a.title}`)
                     const bIndex = typeOrder.indexOf(`${b.title}`)
                     if (aIndex === -1 && bIndex === -1) {

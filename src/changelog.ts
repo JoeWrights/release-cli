@@ -107,26 +107,6 @@ async function generateChangelog(version: string, options: ReleaseCliOptions) {
             // 调用回调函数，传递修改后的 commit
             cb(null, commit)
         },
-        config: {
-            writerOpts: {
-                groupBy: "type",
-                commitGroupsSort: (a: any, b: any) => {
-                    const aIndex = typeOrder.indexOf(`${a.title}`)
-                    const bIndex = typeOrder.indexOf(`${b.title}`)
-                    if (aIndex === -1 && bIndex === -1) {
-                        return `${a.title}`.localeCompare(`${b.title}`)
-                    }
-                    if (aIndex === -1) {
-                        return 1
-                    }
-                    if (bIndex === -1) {
-                        return -1
-                    }
-                    return aIndex - bIndex
-                },
-                commitsSort: ["scope", "subject"],
-            },
-        },
         // config: {
         //     writerOpts: {
         //         // 只覆盖排序相关的选项，不覆盖 transform

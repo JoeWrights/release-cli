@@ -94,10 +94,38 @@ async function generateChangelog(version: string, options: ReleaseCliOptions) {
                 return pkg
             },
         },
-        transform: (commit) => {
-            console.log(JSON.stringify(commit, null, 2))
-
-            return commit
+        transform: (commit: any, cb: (error: any, commit: any) => void) => {
+            // transform 必须调用回调函数，否则流无法正常结束
+            // 将提交类型转换为对应的显示名称
+            if (commit.type && types[commit.type]) {
+                commit.type = types[commit.type]
+            } else if (commit.type) {
+                // 如果类型不在映射中，首字母大写
+                commit.type =
+                    commit.type.charAt(0).toUpperCase() + commit.type.slice(1)
+            }
+            // 调用回调函数，传递修改后的 commit
+            cb(null, commit)
+        },
+        config: {
+            writerOpts: {
+                groupBy: "type",
+                commitGroupsSort: (a: any, b: any) => {
+                    const aIndex = typeOrder.indexOf(`${a.title}`)
+                    const bIndex = typeOrder.indexOf(`${b.title}`)
+                    if (aIndex === -1 && bIndex === -1) {
+                        return `${a.title}`.localeCompare(`${b.title}`)
+                    }
+                    if (aIndex === -1) {
+                        return 1
+                    }
+                    if (bIndex === -1) {
+                        return -1
+                    }
+                    return aIndex - bIndex
+                },
+                commitsSort: ["scope", "subject"],
+            },
         },
         // config: {
         //     writerOpts: {

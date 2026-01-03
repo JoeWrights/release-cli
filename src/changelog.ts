@@ -53,24 +53,75 @@ async function executeGitCommand(version: string, options: ReleaseCliOptions) {
 async function generateChangelog(version: string, options: ReleaseCliOptions) {
     const fileStream = getChangelogFileStream()
 
-    // releaseCount 控制生成多少个版本的 changelog
-    // - 0: 生成所有版本（多个版本号）- 注意：实际生成的版本数取决于 Git 标签数量
-    // - 1: 只生成最新一个版本（单个版本号，默认值）
-    // - 2+: 生成最近 N 个版本
-    //
-    // 重要说明：
-    // - 如果项目只有 1 个 Git 标签，即使 releaseCount: 0，也只会生成 1 个版本
-    // - 如果项目有多个 Git 标签，releaseCount: 0 会生成所有版本
-    // - reset: true 确保覆盖现有 CHANGELOG.md，而不是追加
-    const releaseCount = options?.releaseCount || 0
+    // 扩展支持的提交类型映射
+    const types: Record<string, string> = {
+        feat: "Features",
+        fix: "Bug Fixes",
+        perf: "Performance Improvements",
+        revert: "Reverts",
+        docs: "Documentation",
+        style: "Styles",
+        chore: "Chores",
+        refactor: "Code Refactoring",
+        test: "Tests",
+        build: "Build System",
+        ci: "Continuous Integration",
+    }
+
+    // 定义排序顺序
+    const typeOrder = [
+        "Features",
+        "Bug Fixes",
+        "Performance Improvements",
+        "Code Refactoring",
+        "Documentation",
+        "Styles",
+        "Tests",
+        "Build System",
+        "Continuous Integration",
+        "Chores",
+        "Reverts",
+    ]
 
     cc({
         preset: "angular",
-        releaseCount,
+        releaseCount: 0,
         pkg: {
             transform: (pkg: Record<string, any>) => {
                 pkg.version = `v${version}`
                 return pkg
+            },
+        },
+        transform: (commit) => {
+            // 将提交类型转换为对应的显示名称
+            if (commit.type && types[commit.type]) {
+                commit.type = types[commit.type]
+            } else if (commit.type) {
+                // 如果类型不在映射中，首字母大写
+                commit.type =
+                    commit.type.charAt(0).toUpperCase() + commit.type.slice(1)
+            }
+
+            return commit
+        },
+        config: {
+            writerOpts: {
+                groupBy: "type",
+                commitGroupsSort: (a, b) => {
+                    const aIndex = typeOrder.indexOf(`${a.title}`)
+                    const bIndex = typeOrder.indexOf(`${b.title}`)
+                    if (aIndex === -1 && bIndex === -1) {
+                        return `${a.title}`.localeCompare(`${b.title}`)
+                    }
+                    if (aIndex === -1) {
+                        return 1
+                    }
+                    if (bIndex === -1) {
+                        return -1
+                    }
+                    return aIndex - bIndex
+                },
+                commitsSort: ["scope", "subject"],
             },
         },
     })

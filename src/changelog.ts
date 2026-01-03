@@ -185,7 +185,7 @@ async function generateChangelog(version: string, options: ReleaseCliOptions) {
                 commitsSort: ["scope", "subject"],
             },
         },
-    } as any)
+    })
         .pipe(fileStream)
         .on("close", async () => {
             await executeGitCommand(version, options)

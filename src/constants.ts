@@ -65,4 +65,9 @@ export const COMMIT_TYPES_DISPLAY_NAME: Record<CommitType, string> = {
     [CommitType.DOCS]: "📝 Documentation",
     [CommitType.STYLE]: "💄 Styles",
     [CommitType.CHORE]: "🔧 Chores",
+    [CommitType.SECURITY]: "🔒 Security",
+    [CommitType.TYPES]: "🏷️ Types",
+    [CommitType.I18N]: "🌐 Internationalization",
+    [CommitType.ACCESSIBILITY]: "♿️ Accessibility",
+    [CommitType.DEPS]: "⬆️ Dependencies",
 }

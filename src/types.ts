@@ -2,10 +2,25 @@
  * Release type
  */
 export enum ReleaseType {
+    /**
+     * Major 大版本
+     */
     MAJOR = "major",
+    /**
+     * Minor 小版本
+     */
     MINOR = "minor",
+    /**
+     * Patch 补丁版本
+     */
     PATCH = "patch",
+    /**
+     * Prerelease 预发布
+     */
     PRERELEASE = "prerelease",
+    /**
+     * Custom 自定义
+     */
     CUSTOM = "custom",
 }
 
@@ -13,62 +28,98 @@ export enum ReleaseType {
  * Pre release type
  */
 export enum PreReleaseType {
+    /**
+     * Alpha 内测
+     */
     ALPHA = "alpha",
+    /**
+     * Beta 公测
+     */
     BETA = "beta",
+    /**
+     * RC 候选
+     */
     RC = "rc",
+    /**
+     * Next 下一个
+     */
     NEXT = "next",
+    /**
+     * Experimental 实验
+     */
     EXPERIMENTAL = "experimental",
 }
 
 /**
  * Commit type
  * @see https://www.conventionalcommits.org/en/v1.0.0/
+ * @see https://gitmoji.dev/
  */
 export enum CommitType {
     /**
-     * Features
+     * Features 功能
      */
     FEAT = "feat",
     /**
-     * Bug fixes
+     * Bug fixes 修复
      */
     FIX = "fix",
     /**
-     * Performance improvements
+     * Performance improvements 性能优化
      */
     PERF = "perf",
     /**
-     * Code refactoring
+     * Code refactoring 代码重构
      */
     REFACTOR = "refactor",
     /**
-     * Tests
+     * Tests 测试
      */
     TEST = "test",
     /**
-     * Build system
+     * Build system 构建系统
      */
     BUILD = "build",
     /**
-     * Continuous integration
+     * Continuous integration 持续集成
      */
     CI = "ci",
     /**
-     * Reverts
+     * Reverts 回滚
      */
     REVERT = "revert",
     /**
-     * Documentation
+     * Documentation 文档
      */
     DOCS = "docs",
     /**
-     * Styles
+     * Styles 样式
      */
     STYLE = "style",
     /**
-     * Chores
+     * Chores 杂项
      */
     CHORE = "chore",
+    /**
+     * Security 安全
+     */
+    SECURITY = "security",
+    /**
+     * Types (TypeScript, Flow, etc.) 类型
+     */
+    TYPES = "types",
+    /**
+     * Internationalization 国际化
+     */
+    I18N = "i18n",
+    /**
+     * Accessibility 无障碍
+     */
+    ACCESSIBILITY = "accessibility",
+    /**
+     * Dependencies 依赖
+     */
+    DEPS = "deps",
 }
 
 /**

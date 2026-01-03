@@ -1,24 +1,25 @@
-## v1.0.2-alpha.21 (2026-01-03)
+## v1.0.2-alpha.22 (2026-01-03)
 
 
-### Features
-
-* Enhance changelog generation by adding support for custom commit type mappings and sorting order ([5c42024](https://github.com/JoeWrights/release-cli/commit/5c420242561d0480a76750a6db881740feecfc08))
-* Integrate conventional-changelog-angular for enhanced changelog generation and add repository metadata to package.json ([7c3075f](https://github.com/JoeWrights/release-cli/commit/7c3075f2b2940c1f2a37f215e17a89d7f671b99e))
-
-
-### Code Refactoring
+### ♻️ Code Refactoring
 
 * Introduce CommitType enum and COMMIT_TYPES_DISPLAY_NAME for improved commit type handling in changelog generation ([3f16e0b](https://github.com/JoeWrights/release-cli/commit/3f16e0b4a89057538d0f2c92970817bd6b8795c8))
 
 
-### Documentation
+### ✨ Features
+
+* Enhance changelog and release CLI configuration with customizable commit type display names and tag prefix options ([a6e23ef](https://github.com/JoeWrights/release-cli/commit/a6e23efe981e66525c877fc607969c6d3740433d))
+* Enhance changelog generation by adding support for custom commit type mappings and sorting order ([5c42024](https://github.com/JoeWrights/release-cli/commit/5c420242561d0480a76750a6db881740feecfc08))
+* Integrate conventional-changelog-angular for enhanced changelog generation and add repository metadata to package.json ([7c3075f](https://github.com/JoeWrights/release-cli/commit/7c3075f2b2940c1f2a37f215e17a89d7f671b99e))
+
+
+### 📝 Documentation
 
 * correct minor typo in README description of CLI tool ([4c39669](https://github.com/JoeWrights/release-cli/commit/4c396692fca080a5fa7b0abef262ae9fc825f4e3))
 * update README to include additional features of the CLI tool ([016275b](https://github.com/JoeWrights/release-cli/commit/016275b2e7395049f29827230cda68b092edc15e))
 
 
-### Chores
+### 🔧 Chores
 
 * add .npmrc for ESLint and Prettier hoisting, update changelog generation options for compatibility ([3ec49c7](https://github.com/JoeWrights/release-cli/commit/3ec49c743655e2a0d3b913ca443aea32788786bb))
 * Add .npmrc to hoist ESLint and Prettier dependencies for proper plugin resolution ([0f2339b](https://github.com/JoeWrights/release-cli/commit/0f2339b3cb071505a0944c0b2abfd432156436fd))
@@ -60,6 +61,7 @@
 * v1.0.2-alpha.18 changelog [ci skip] ([bf72a0a](https://github.com/JoeWrights/release-cli/commit/bf72a0a00a2597ea48b27da794d8ff60d1c286a6))
 * v1.0.2-alpha.2 changelog [ci skip] ([b0abab2](https://github.com/JoeWrights/release-cli/commit/b0abab263a9f43e5596442016af8f9156423f343))
 * v1.0.2-alpha.20 changelog [ci skip] ([fe6558c](https://github.com/JoeWrights/release-cli/commit/fe6558c058526604181168eff14ee65018e32f76))
+* v1.0.2-alpha.21 changelog [ci skip] ([2ccf71d](https://github.com/JoeWrights/release-cli/commit/2ccf71d5ae61b0eb7918fad4b70ed7aefa1b9385))
 * v1.0.2-alpha.8 changelog [ci skip] ([b2388f6](https://github.com/JoeWrights/release-cli/commit/b2388f6cfbba6ee355f0aa7492a862f680357a94))
 
 

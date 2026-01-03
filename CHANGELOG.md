@@ -1,4 +1,4 @@
-## v1.0.16-alpha.0 (2026-01-03)
+## v1.0.16 (2026-01-03)
 
 
 ### ♻️ Code Refactoring
@@ -28,6 +28,7 @@
 
 * add .npmrc for ESLint and Prettier hoisting, update changelog generation options for compatibility ([3ec49c7](https://github.com/JoeWrights/release-cli/commit/3ec49c743655e2a0d3b913ca443aea32788786bb))
 * Add .npmrc to hoist ESLint and Prettier dependencies for proper plugin resolution ([0f2339b](https://github.com/JoeWrights/release-cli/commit/0f2339b3cb071505a0944c0b2abfd432156436fd))
+* add console log for angular preset configuration completion in changelog generation ([9e0c22a](https://github.com/JoeWrights/release-cli/commit/9e0c22aeb7f9a5ecdae310d6711daf46c6445a02))
 * add conventional-changelog-angular dependency for improved changelog generation ([56ee2ff](https://github.com/JoeWrights/release-cli/commit/56ee2ff0fc7360f9edeed9876dc1b42fec8fd9e1))
 * bump version to 1.0.2-alpha.19 and update changelog generation comment for clarity ([31e1761](https://github.com/JoeWrights/release-cli/commit/31e17619f47d5277082733d19e8a9b0b1679a7c2))
 * bump version to 1.0.2-alpha.3 and remove outdated changelog entry ([bd33642](https://github.com/JoeWrights/release-cli/commit/bd336423a030ee128e649e217211ff17cec198f8))
@@ -71,6 +72,7 @@
 * v1.0.14-alpha.0 changelog [ci skip] ([9be2400](https://github.com/JoeWrights/release-cli/commit/9be2400d109be48922e32fd9e6dc008d49bb400b))
 * v1.0.15 changelog [ci skip] ([5cee12e](https://github.com/JoeWrights/release-cli/commit/5cee12ece7410ec9db9c5fd85d85c4cdfae04721))
 * v1.0.15-alpha.0 changelog [ci skip] ([8c0e413](https://github.com/JoeWrights/release-cli/commit/8c0e41308d719d489047cc530be81de57cf40a4d))
+* v1.0.16-alpha.0 changelog [ci skip] ([99d1ca4](https://github.com/JoeWrights/release-cli/commit/99d1ca48f392a01545315bbd4e42868068036326))
 * v1.0.2 changelog [ci skip] ([f994736](https://github.com/JoeWrights/release-cli/commit/f994736d462ee150d8bf0fa11e6298a3224c987f))
 * v1.0.2-alpha.0 changelog [ci skip] ([5328162](https://github.com/JoeWrights/release-cli/commit/5328162742cc01257a334fc220c09cddcb372605))
 * v1.0.2-alpha.1 changelog [ci skip] ([22f2b61](https://github.com/JoeWrights/release-cli/commit/22f2b6173785dc48209e6fdff0a489fb882c578e))

@@ -65,9 +65,9 @@ async function generateChangelog(version: string, options: ReleaseCliOptions) {
     }
 
     // 加载 angular preset 配置（angularPreset 本身就是一个 Promise）
-    const angularConfig = await angularPreset
+    // const angularConfig = await angularPreset
 
-    console.log(angularConfig, "done")
+    // console.log(angularConfig, "done")
 
     cc({
         releaseCount: 0,

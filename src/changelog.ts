@@ -174,6 +174,8 @@ async function generateChangelog(version: string, options: ReleaseCliOptions) {
                     // 返回 commit（保留所有类型，不进行过滤）
                     return commit
                 },
+                groupBy: "type",
+                commitsSort: ["scope", "subject"],
             },
         },
     })

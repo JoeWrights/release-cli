@@ -64,25 +64,33 @@ async function generateChangelog(version: string, options: ReleaseCliOptions) {
         ...(options.commitTypeDisplayName || {}),
     }
 
-    // 定义排序顺序
+    // 定义排序顺序（按优先级排序）
     const typeOrder = [
-        "✨ Features",
-        "🐛 Bug Fixes",
-        "⚡ Performance Improvements",
-        "♻️ Code Refactoring",
-        "✅ Tests",
-        "📦 Build System",
-        "👷 Continuous Integration",
-        "⏪ Reverts",
-        "📝 Documentation",
-        "💄 Styles",
-        "🔧 Chores",
-        "🔒 Security",
-        "🏷️ Types",
-        "🌐 Internationalization",
-        "♿️ Accessibility",
-        "⬆️ Dependencies",
-    ]
+        typeDisplayName[CommitType.FEAT],
+        typeDisplayName[CommitType.FIX],
+        typeDisplayName[CommitType.PERF],
+        typeDisplayName[CommitType.REFACTOR],
+        typeDisplayName[CommitType.STYLE],
+        typeDisplayName[CommitType.CHORE],
+        typeDisplayName[CommitType.TYPES],
+        typeDisplayName[CommitType.I18N],
+        typeDisplayName[CommitType.DEPS],
+        typeDisplayName[CommitType.TEST],
+        typeDisplayName[CommitType.BUILD],
+        typeDisplayName[CommitType.CI],
+        typeDisplayName[CommitType.REVERT],
+        typeDisplayName[CommitType.DOCS],
+        typeDisplayName[CommitType.SECURITY],
+        typeDisplayName[CommitType.ACCESSIBILITY],
+    ].filter(Boolean)
+
+    // 使用 Map 缓存索引，避免每次比较都调用 indexOf
+    const typeOrderMap = new Map<string, number>()
+    typeOrder.forEach((type, index) => {
+        if (type) {
+            typeOrderMap.set(type, index)
+        }
+    })
 
     // 加载 angular preset 配置（angularPreset 本身就是一个 Promise）
     const angularConfig = await angularPreset
@@ -193,15 +201,20 @@ async function generateChangelog(version: string, options: ReleaseCliOptions) {
                 },
                 groupBy: "type",
                 commitGroupsSort: (a: any, b: any) => {
-                    const aIndex = typeOrder.indexOf(`${a.title}`)
-                    const bIndex = typeOrder.indexOf(`${b.title}`)
-                    if (aIndex === -1 && bIndex === -1) {
-                        return `${a.title}`.localeCompare(`${b.title}`)
+                    const aTitle = `${a.title}`
+                    const bTitle = `${b.title}`
+
+                    // 使用 Map 快速查找索引，避免每次比较都遍历数组
+                    const aIndex = typeOrderMap.get(aTitle)
+                    const bIndex = typeOrderMap.get(bTitle)
+
+                    if (aIndex === undefined && bIndex === undefined) {
+                        return aTitle.localeCompare(bTitle)
                     }
-                    if (aIndex === -1) {
+                    if (aIndex === undefined) {
                         return 1
                     }
-                    if (bIndex === -1) {
+                    if (bIndex === undefined) {
                         return -1
                     }
                     return aIndex - bIndex

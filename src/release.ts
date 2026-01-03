@@ -164,6 +164,10 @@ async function release(options?: Record<string, any>) {
 
     pkgContent.version = version
 
+    console.log(pkgContent, "pkgContent")
+
+    console.log("start write package.json")
+
     fs.writeFileSync(
         getPackageJsonPath(),
         `${JSON.stringify(
@@ -173,7 +177,13 @@ async function release(options?: Record<string, any>) {
         )}\n`,
     )
 
+    console.log("end write package.json")
+
+    console.log("start changelog")
+
     await generateChangelog(version, mergedConfig)
+
+    console.log("end changelog")
 
     if (mergedConfig.autoBuild) {
         await execa("npm", ["run", "build"], {

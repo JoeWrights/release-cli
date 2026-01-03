@@ -65,19 +65,7 @@ async function generateChangelog(version: string, options: ReleaseCliOptions) {
     }
 
     // 定义排序顺序
-    const typeOrder = [
-        "Features",
-        "Bug Fixes",
-        "Performance Improvements",
-        "Code Refactoring",
-        "Documentation",
-        "Styles",
-        "Tests",
-        "Build System",
-        "Continuous Integration",
-        "Chores",
-        "Reverts",
-    ]
+    const typeOrder = Object.values(typeDisplayName)
 
     // 加载 angular preset 配置（angularPreset 本身就是一个 Promise）
     const angularConfig = await angularPreset

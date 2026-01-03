@@ -1,18 +1,4 @@
-## v1.0.11 (2026-01-03)
-
-
-### Features
-
-* Enhance changelog and release CLI configuration with customizable commit type display names and tag prefix options ([a6e23ef](https://github.com/JoeWrights/release-cli/commit/a6e23efe981e66525c877fc607969c6d3740433d))
-* Enhance changelog generation by adding support for custom commit type mappings and sorting order ([5c42024](https://github.com/JoeWrights/release-cli/commit/5c420242561d0480a76750a6db881740feecfc08))
-* Expand commit type options and enhance ReleaseType and PreReleaseType enums with additional categories and descriptions ([c67ecfd](https://github.com/JoeWrights/release-cli/commit/c67ecfd1ef52a73478f5b0941e5e967498baeb7c))
-* Integrate conventional-changelog-angular for enhanced changelog generation and add repository metadata to package.json ([7c3075f](https://github.com/JoeWrights/release-cli/commit/7c3075f2b2940c1f2a37f215e17a89d7f671b99e))
-
-
-### Code Refactoring
-
-* Introduce CommitType enum and COMMIT_TYPES_DISPLAY_NAME for improved commit type handling in changelog generation ([3f16e0b](https://github.com/JoeWrights/release-cli/commit/3f16e0b4a89057538d0f2c92970817bd6b8795c8))
-* Update changelog generation to use CommitType enum for type display names and define a comprehensive sorting order for commit types ([a8f3c36](https://github.com/JoeWrights/release-cli/commit/a8f3c36b11d4d14dafdc3bcabe6fafbc17ad3d31))
+## v1.0.12 (2026-01-03)
 
 
 ### Chores
@@ -53,6 +39,7 @@
 * v1.0.0 changelog [ci skip] ([e87daf1](https://github.com/JoeWrights/release-cli/commit/e87daf1474fbe12ecfdf349c62b8c159e3863960))
 * v1.0.1 changelog [ci skip] ([ce6eb72](https://github.com/JoeWrights/release-cli/commit/ce6eb72e3fe3bd4267a98f9438e0361eb74a1a27))
 * v1.0.10 changelog [ci skip] ([7221f62](https://github.com/JoeWrights/release-cli/commit/7221f62f44a3a3b69f1b78d264e3e8365b90c71b))
+* v1.0.11 changelog [ci skip] ([c554e1e](https://github.com/JoeWrights/release-cli/commit/c554e1e9f1ae30786a0adeb10540deb36d370d63))
 * v1.0.11-alpha.0 changelog [ci skip] ([de842ff](https://github.com/JoeWrights/release-cli/commit/de842ff68afd470dd60feccfd43b7dd5753dc111))
 * v1.0.2 changelog [ci skip] ([f994736](https://github.com/JoeWrights/release-cli/commit/f994736d462ee150d8bf0fa11e6298a3224c987f))
 * v1.0.2-alpha.0 changelog [ci skip] ([5328162](https://github.com/JoeWrights/release-cli/commit/5328162742cc01257a334fc220c09cddcb372605))
@@ -84,16 +71,31 @@
 * v1.0.9-alpha.0 changelog [ci skip] ([ee1a0a0](https://github.com/JoeWrights/release-cli/commit/ee1a0a0ed20faaf0653f7f79b3acc30d542b8e8c))
 
 
-### Documentation
+### Code Refactoring
 
-* correct minor typo in README description of CLI tool ([4c39669](https://github.com/JoeWrights/release-cli/commit/4c396692fca080a5fa7b0abef262ae9fc825f4e3))
-* update README to include additional features of the CLI tool ([016275b](https://github.com/JoeWrights/release-cli/commit/016275b2e7395049f29827230cda68b092edc15e))
+* Introduce CommitType enum and COMMIT_TYPES_DISPLAY_NAME for improved commit type handling in changelog generation ([3f16e0b](https://github.com/JoeWrights/release-cli/commit/3f16e0b4a89057538d0f2c92970817bd6b8795c8))
+* Simplify changelog generation by removing hardcoded sorting order and related logic for commit types ([4205811](https://github.com/JoeWrights/release-cli/commit/42058117fb2e06ac3662a10e05a6c337f80bf8ae))
+* Update changelog generation to use CommitType enum for type display names and define a comprehensive sorting order for commit types ([a8f3c36](https://github.com/JoeWrights/release-cli/commit/a8f3c36b11d4d14dafdc3bcabe6fafbc17ad3d31))
 
 
 ### Debug
 
 * add console logging for commit group sorting in changelog generation ([5948b2f](https://github.com/JoeWrights/release-cli/commit/5948b2f13b6642f57f6a6499a27f6e1c18e521d3))
 * add console logging for commit group titles during changelog generation ([589bc3a](https://github.com/JoeWrights/release-cli/commit/589bc3a5ad8800da07e5bbb9ae0d9be0c31f606a))
+
+
+### Documentation
+
+* correct minor typo in README description of CLI tool ([4c39669](https://github.com/JoeWrights/release-cli/commit/4c396692fca080a5fa7b0abef262ae9fc825f4e3))
+* update README to include additional features of the CLI tool ([016275b](https://github.com/JoeWrights/release-cli/commit/016275b2e7395049f29827230cda68b092edc15e))
+
+
+### Features
+
+* Enhance changelog and release CLI configuration with customizable commit type display names and tag prefix options ([a6e23ef](https://github.com/JoeWrights/release-cli/commit/a6e23efe981e66525c877fc607969c6d3740433d))
+* Enhance changelog generation by adding support for custom commit type mappings and sorting order ([5c42024](https://github.com/JoeWrights/release-cli/commit/5c420242561d0480a76750a6db881740feecfc08))
+* Expand commit type options and enhance ReleaseType and PreReleaseType enums with additional categories and descriptions ([c67ecfd](https://github.com/JoeWrights/release-cli/commit/c67ecfd1ef52a73478f5b0941e5e967498baeb7c))
+* Integrate conventional-changelog-angular for enhanced changelog generation and add repository metadata to package.json ([7c3075f](https://github.com/JoeWrights/release-cli/commit/7c3075f2b2940c1f2a37f215e17a89d7f671b99e))
 
 
 

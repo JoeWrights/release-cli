@@ -1,4 +1,4 @@
-## v1.0.2 (2026-01-03)
+## v1.0.3 (2026-01-03)
 
 
 ### ✨ Features
@@ -49,6 +49,7 @@
 * update package.json and improve changelog generation options ([9997354](https://github.com/JoeWrights/release-cli/commit/999735459a22308f2e5294af55561387fdb0f000))
 * v1.0.0 changelog [ci skip] ([e87daf1](https://github.com/JoeWrights/release-cli/commit/e87daf1474fbe12ecfdf349c62b8c159e3863960))
 * v1.0.1 changelog [ci skip] ([ce6eb72](https://github.com/JoeWrights/release-cli/commit/ce6eb72e3fe3bd4267a98f9438e0361eb74a1a27))
+* v1.0.2 changelog [ci skip] ([f994736](https://github.com/JoeWrights/release-cli/commit/f994736d462ee150d8bf0fa11e6298a3224c987f))
 * v1.0.2-alpha.0 changelog [ci skip] ([5328162](https://github.com/JoeWrights/release-cli/commit/5328162742cc01257a334fc220c09cddcb372605))
 * v1.0.2-alpha.1 changelog [ci skip] ([22f2b61](https://github.com/JoeWrights/release-cli/commit/22f2b6173785dc48209e6fdff0a489fb882c578e))
 * v1.0.2-alpha.10 changelog [ci skip] ([e747c1f](https://github.com/JoeWrights/release-cli/commit/e747c1f645864c6af739e965661f7ce9eedac1d7))

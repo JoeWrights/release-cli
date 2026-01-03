@@ -1,13 +1,7 @@
-## v1.0.7 (2026-01-03)
+## v1.0.8 (2026-01-03)
 
 
-### ♻️ Code Refactoring
-
-* Introduce CommitType enum and COMMIT_TYPES_DISPLAY_NAME for improved commit type handling in changelog generation ([3f16e0b](https://github.com/JoeWrights/release-cli/commit/3f16e0b4a89057538d0f2c92970817bd6b8795c8))
-* Update changelog generation to use CommitType enum for type display names and define a comprehensive sorting order for commit types ([a8f3c36](https://github.com/JoeWrights/release-cli/commit/a8f3c36b11d4d14dafdc3bcabe6fafbc17ad3d31))
-
-
-### ✨ Features
+### Features
 
 * Enhance changelog and release CLI configuration with customizable commit type display names and tag prefix options ([a6e23ef](https://github.com/JoeWrights/release-cli/commit/a6e23efe981e66525c877fc607969c6d3740433d))
 * Enhance changelog generation by adding support for custom commit type mappings and sorting order ([5c42024](https://github.com/JoeWrights/release-cli/commit/5c420242561d0480a76750a6db881740feecfc08))
@@ -15,13 +9,13 @@
 * Integrate conventional-changelog-angular for enhanced changelog generation and add repository metadata to package.json ([7c3075f](https://github.com/JoeWrights/release-cli/commit/7c3075f2b2940c1f2a37f215e17a89d7f671b99e))
 
 
-### 📝 Documentation
+### Code Refactoring
 
-* correct minor typo in README description of CLI tool ([4c39669](https://github.com/JoeWrights/release-cli/commit/4c396692fca080a5fa7b0abef262ae9fc825f4e3))
-* update README to include additional features of the CLI tool ([016275b](https://github.com/JoeWrights/release-cli/commit/016275b2e7395049f29827230cda68b092edc15e))
+* Introduce CommitType enum and COMMIT_TYPES_DISPLAY_NAME for improved commit type handling in changelog generation ([3f16e0b](https://github.com/JoeWrights/release-cli/commit/3f16e0b4a89057538d0f2c92970817bd6b8795c8))
+* Update changelog generation to use CommitType enum for type display names and define a comprehensive sorting order for commit types ([a8f3c36](https://github.com/JoeWrights/release-cli/commit/a8f3c36b11d4d14dafdc3bcabe6fafbc17ad3d31))
 
 
-### 🔧 Chores
+### Chores
 
 * add .npmrc for ESLint and Prettier hoisting, update changelog generation options for compatibility ([3ec49c7](https://github.com/JoeWrights/release-cli/commit/3ec49c743655e2a0d3b913ca443aea32788786bb))
 * Add .npmrc to hoist ESLint and Prettier dependencies for proper plugin resolution ([0f2339b](https://github.com/JoeWrights/release-cli/commit/0f2339b3cb071505a0944c0b2abfd432156436fd))
@@ -46,6 +40,7 @@
 * remove CHANGELOG.md as it is no longer needed ([a8cf938](https://github.com/JoeWrights/release-cli/commit/a8cf93807a19a5b846c0afeb0ca03a332342ee5e))
 * remove console logging from changelog generation for cleaner output ([a40acbf](https://github.com/JoeWrights/release-cli/commit/a40acbf75dc9be0e656db9edc6371a9469d14e39))
 * Remove unused dependencies from pnpm-lock.yaml to streamline project and reduce bloat. ([685ec10](https://github.com/JoeWrights/release-cli/commit/685ec106609c8f7a63a0f565db6fc309eac9425e))
+* restore and enhance sorting logic in changelog generation ([db44c27](https://github.com/JoeWrights/release-cli/commit/db44c273c8b8992fa4059c9d7c396196bdd7b7f5))
 * Update build scripts to use pnpm, adjust ESLint ignore patterns, and streamline package.json for improved dependency management ([25687f2](https://github.com/JoeWrights/release-cli/commit/25687f27a92cb9f9c6b893fcc21a369f40be88f2))
 * update changelog generation to use emoji for commit type display names ([5093cec](https://github.com/JoeWrights/release-cli/commit/5093cecd56095ef79b4bd434dbfac353169f2d49))
 * update changelog transformation logic to include console logging for debugging ([469b136](https://github.com/JoeWrights/release-cli/commit/469b136ceac062f8db509b3904d10d18ea7c0d38))
@@ -77,6 +72,13 @@
 * v1.0.4 changelog [ci skip] ([daec414](https://github.com/JoeWrights/release-cli/commit/daec414fbb5212712a0b6bcb636dfc446d8507cf))
 * v1.0.5 changelog [ci skip] ([9fdf5a5](https://github.com/JoeWrights/release-cli/commit/9fdf5a5f9a1904c958e15234bc7dd604e9639bd5))
 * v1.0.6 changelog [ci skip] ([812de6d](https://github.com/JoeWrights/release-cli/commit/812de6d7a23701d7050ff5a21ead20561f3c2d06))
+* v1.0.7 changelog [ci skip] ([3beb731](https://github.com/JoeWrights/release-cli/commit/3beb7315750b4800da720592cfa6c2b577d76699))
+
+
+### Documentation
+
+* correct minor typo in README description of CLI tool ([4c39669](https://github.com/JoeWrights/release-cli/commit/4c396692fca080a5fa7b0abef262ae9fc825f4e3))
+* update README to include additional features of the CLI tool ([016275b](https://github.com/JoeWrights/release-cli/commit/016275b2e7395049f29827230cda68b092edc15e))
 
 
 ### Debug

@@ -1,8 +1,9 @@
-## v1.0.20-alpha.0 (2026-01-03)
+## v1.0.20-alpha.1 (2026-01-03)
 
 
 ### Features
 
+* add npmRegistry configuration option and improve npm package version check ([253a362](https://github.com/JoeWrights/release-cli/commit/253a362de1394242cc51d63ef998d1b315409a3b))
 * Enhance changelog and release CLI configuration with customizable commit type display names and tag prefix options ([a6e23ef](https://github.com/JoeWrights/release-cli/commit/a6e23efe981e66525c877fc607969c6d3740433d))
 * Enhance changelog generation by adding support for custom commit type mappings and sorting order ([5c42024](https://github.com/JoeWrights/release-cli/commit/5c420242561d0480a76750a6db881740feecfc08))
 * Expand commit type options and enhance ReleaseType and PreReleaseType enums with additional categories and descriptions ([c67ecfd](https://github.com/JoeWrights/release-cli/commit/c67ecfd1ef52a73478f5b0941e5e967498baeb7c))

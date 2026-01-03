@@ -1,4 +1,4 @@
-## v1.0.3 (2026-01-03)
+## v1.0.4 (2026-01-03)
 
 
 ### ✨ Features
@@ -42,6 +42,7 @@
 * refine changelog transformation logic to restore commit type mapping and maintain console logging for debugging ([222f3ff](https://github.com/JoeWrights/release-cli/commit/222f3ffacf0a398a87345b2c397ff826cdeeaf79))
 * remove changelog sorting configuration and related options ([ef14b4f](https://github.com/JoeWrights/release-cli/commit/ef14b4f41ace7aa5f05be5d752de7ec10ae86425))
 * remove CHANGELOG.md as it is no longer needed ([a8cf938](https://github.com/JoeWrights/release-cli/commit/a8cf93807a19a5b846c0afeb0ca03a332342ee5e))
+* remove console logging from changelog generation for cleaner output ([a40acbf](https://github.com/JoeWrights/release-cli/commit/a40acbf75dc9be0e656db9edc6371a9469d14e39))
 * Remove unused dependencies from pnpm-lock.yaml to streamline project and reduce bloat. ([685ec10](https://github.com/JoeWrights/release-cli/commit/685ec106609c8f7a63a0f565db6fc309eac9425e))
 * Update build scripts to use pnpm, adjust ESLint ignore patterns, and streamline package.json for improved dependency management ([25687f2](https://github.com/JoeWrights/release-cli/commit/25687f27a92cb9f9c6b893fcc21a369f40be88f2))
 * update changelog transformation logic to include console logging for debugging ([469b136](https://github.com/JoeWrights/release-cli/commit/469b136ceac062f8db509b3904d10d18ea7c0d38))
@@ -69,6 +70,7 @@
 * v1.0.2-alpha.23 changelog [ci skip] ([8e8bb56](https://github.com/JoeWrights/release-cli/commit/8e8bb568274a1c4c7d9c247708ae77be47cc7481))
 * v1.0.2-alpha.24 changelog [ci skip] ([8ebc930](https://github.com/JoeWrights/release-cli/commit/8ebc930a564b2208504aa2d7222be4e871b0ffdc))
 * v1.0.2-alpha.8 changelog [ci skip] ([b2388f6](https://github.com/JoeWrights/release-cli/commit/b2388f6cfbba6ee355f0aa7492a862f680357a94))
+* v1.0.3 changelog [ci skip] ([310274c](https://github.com/JoeWrights/release-cli/commit/310274cdd946b1e27153d13daef5d6e22f859fcd))
 
 
 ### Debug

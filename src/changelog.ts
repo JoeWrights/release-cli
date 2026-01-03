@@ -139,13 +139,8 @@ async function generateChangelog(version: string, options: ReleaseCliOptions) {
                             commit.type.slice(1)
                     }
 
-                    // 为 commit 添加排序权重（存储在属性中，用于排序）
-                    if (commit.type) {
-                        const sortOrder = typeSortMap.get(commit.type)
-                        // 使用一个属性来存储排序权重
-                        commit.sortOrder =
-                            sortOrder !== undefined ? sortOrder : 9999
-                    }
+                    // 注意：排序权重不再存储在 commit 中
+                    // 排序函数会直接从 typeSortMap 中查找，性能更好
 
                     // 如果没有类型，跳过这个提交（可能是 merge commit 等）
                     if (!commit.type) {
@@ -208,17 +203,11 @@ async function generateChangelog(version: string, options: ReleaseCliOptions) {
                     return commit
                 },
                 groupBy: "type",
-                // 使用排序权重进行排序，性能更好
+                // 使用极简的排序函数，直接从 title 对应的 Map 中查找
+                // 避免访问 commits 数组，提升性能
                 commitGroupsSort: (a: any, b: any) => {
-                    // 从第一个 commit 中获取排序权重（所有相同类型的 commit 权重相同）
-                    const aSort =
-                        a.commits && a.commits[0]
-                            ? a.commits[0].sortOrder ?? 9999
-                            : 9999
-                    const bSort =
-                        b.commits && b.commits[0]
-                            ? b.commits[0].sortOrder ?? 9999
-                            : 9999
+                    const aSort = typeSortMap.get(a.title) ?? 9999
+                    const bSort = typeSortMap.get(b.title) ?? 9999
                     return aSort - bSort
                 },
                 commitsSort: ["scope", "subject"],

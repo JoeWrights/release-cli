@@ -1,6 +1,6 @@
 # @joewrights/release-cli
 
-一个用于自动化项目发布流程的 CLI 工具，支持版本号管理、自动生成 changelog、自动构建和 Git 操作等。
+一个用于自动化项目发布流程的 CLI 工具，支持版本号管理、自动生成 changelog、自动构建和 Git 操作。
 
 ## 功能特性
 

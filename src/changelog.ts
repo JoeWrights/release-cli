@@ -71,115 +71,116 @@ async function generateChangelog(version: string, options: ReleaseCliOptions) {
 
     cc({
         releaseCount: 0,
+        preset: "angular",
         pkg: {
             transform: (pkg: Record<string, any>) => {
                 pkg.version = `v${version}`
                 return pkg
             },
         },
-        config: {
-            parserOpts: angularConfig.parserOpts,
-            writerOpts: {
-                ...angularConfig.writerOpts,
-                transform: (commit: any, context: any) => {
-                    // 首先处理 BREAKING CHANGES
-                    if (commit.notes && commit.notes.length > 0) {
-                        commit.notes.forEach((note: any) => {
-                            note.title = "BREAKING CHANGES"
-                        })
-                    }
+        // config: {
+        //     parserOpts: angularConfig.parserOpts,
+        //     writerOpts: {
+        //         ...angularConfig.writerOpts,
+        //         transform: (commit: any, context: any) => {
+        //             // 首先处理 BREAKING CHANGES
+        //             if (commit.notes && commit.notes.length > 0) {
+        //                 commit.notes.forEach((note: any) => {
+        //                     note.title = "BREAKING CHANGES"
+        //                 })
+        //             }
 
-                    // 处理 revert 类型（需要在类型转换之前处理）
-                    if (commit.revert) {
-                        commit.type = typeDisplayName.revert || "Reverts"
-                    }
+        //             // 处理 revert 类型（需要在类型转换之前处理）
+        //             if (commit.revert) {
+        //                 commit.type = typeDisplayName.revert || "Reverts"
+        //             }
 
-                    // 将提交类型转换为对应的显示名称
-                    // 重要：先转换类型，确保所有类型都被识别和保留
-                    if (
-                        commit.type &&
-                        typeDisplayName[
-                            commit.type as keyof typeof COMMIT_TYPES_DISPLAY_NAME
-                        ]
-                    ) {
-                        commit.type =
-                            typeDisplayName[
-                                commit.type as keyof typeof COMMIT_TYPES_DISPLAY_NAME
-                            ]
-                    } else if (commit.type) {
-                        // 如果类型不在映射中，首字母大写
-                        commit.type =
-                            commit.type.charAt(0).toUpperCase() +
-                            commit.type.slice(1)
-                    }
+        //             // 将提交类型转换为对应的显示名称
+        //             // 重要：先转换类型，确保所有类型都被识别和保留
+        //             if (
+        //                 commit.type &&
+        //                 typeDisplayName[
+        //                     commit.type as keyof typeof COMMIT_TYPES_DISPLAY_NAME
+        //                 ]
+        //             ) {
+        //                 commit.type =
+        //                     typeDisplayName[
+        //                         commit.type as keyof typeof COMMIT_TYPES_DISPLAY_NAME
+        //                     ]
+        //             } else if (commit.type) {
+        //                 // 如果类型不在映射中，首字母大写
+        //                 commit.type =
+        //                     commit.type.charAt(0).toUpperCase() +
+        //                     commit.type.slice(1)
+        //             }
 
-                    // 注意：排序权重不再存储在 commit 中
-                    // 排序函数会直接从 typeSortMap 中查找，性能更好
+        //             // 注意：排序权重不再存储在 commit 中
+        //             // 排序函数会直接从 typeSortMap 中查找，性能更好
 
-                    // 如果没有类型，跳过这个提交（可能是 merge commit 等）
-                    if (!commit.type) {
-                        return
-                    }
+        //             // 如果没有类型，跳过这个提交（可能是 merge commit 等）
+        //             if (!commit.type) {
+        //                 return
+        //             }
 
-                    // 处理 scope
-                    if (commit.scope === "*") {
-                        commit.scope = ""
-                    }
+        //             // 处理 scope
+        //             if (commit.scope === "*") {
+        //                 commit.scope = ""
+        //             }
 
-                    // 处理 shortHash
-                    if (typeof commit.hash === "string") {
-                        commit.shortHash = commit.hash.slice(0, 7)
-                    }
+        //             // 处理 shortHash
+        //             if (typeof commit.hash === "string") {
+        //                 commit.shortHash = commit.hash.slice(0, 7)
+        //             }
 
-                    // 处理 subject 中的 issue 链接和用户提及
-                    if (typeof commit.subject === "string") {
-                        const issues: string[] = []
-                        let url = context.repository
-                            ? `${context.host}/${context.owner}/${context.repository}`
-                            : context.repoUrl
+        //             // 处理 subject 中的 issue 链接和用户提及
+        //             if (typeof commit.subject === "string") {
+        //                 const issues: string[] = []
+        //                 let url = context.repository
+        //                     ? `${context.host}/${context.owner}/${context.repository}`
+        //                     : context.repoUrl
 
-                        if (url) {
-                            url = `${url}/issues/`
-                            // Issue URLs
-                            commit.subject = commit.subject.replace(
-                                /#(\d+)/g,
-                                (_: string, issue: string) => {
-                                    issues.push(issue)
-                                    return `[#${issue}](${url}${issue})`
-                                },
-                            )
-                        }
+        //                 if (url) {
+        //                     url = `${url}/issues/`
+        //                     // Issue URLs
+        //                     commit.subject = commit.subject.replace(
+        //                         /#(\d+)/g,
+        //                         (_: string, issue: string) => {
+        //                             issues.push(issue)
+        //                             return `[#${issue}](${url}${issue})`
+        //                         },
+        //                     )
+        //                 }
 
-                        if (context.host) {
-                            // User URLs
-                            commit.subject = commit.subject.replace(
-                                /\B@([\da-z](?:-?[\da-z]){0,38})/g,
-                                (_: string, username: string) => {
-                                    if (username.includes(".")) {
-                                        return `@${username}`
-                                    }
-                                    return `[@${username}](${context.host}/${username})`
-                                },
-                            )
-                        }
+        //                 if (context.host) {
+        //                     // User URLs
+        //                     commit.subject = commit.subject.replace(
+        //                         /\B@([\da-z](?:-?[\da-z]){0,38})/g,
+        //                         (_: string, username: string) => {
+        //                             if (username.includes(".")) {
+        //                                 return `@${username}`
+        //                             }
+        //                             return `[@${username}](${context.host}/${username})`
+        //                         },
+        //                     )
+        //                 }
 
-                        // 移除已经处理的 references
-                        if (commit.references) {
-                            commit.references = commit.references.filter(
-                                (ref: any) => {
-                                    return !issues.includes(ref.issue)
-                                },
-                            )
-                        }
-                    }
+        //                 // 移除已经处理的 references
+        //                 if (commit.references) {
+        //                     commit.references = commit.references.filter(
+        //                         (ref: any) => {
+        //                             return !issues.includes(ref.issue)
+        //                         },
+        //                     )
+        //                 }
+        //             }
 
-                    // 返回 commit（保留所有类型，不进行过滤）
-                    return commit
-                },
-                // groupBy: "type",
-                // commitsSort: ["scope", "subject"],
-            },
-        },
+        //             // 返回 commit（保留所有类型，不进行过滤）
+        //             return commit
+        //         },
+        //         // groupBy: "type",
+        //         // commitsSort: ["scope", "subject"],
+        //     },
+        // },
     })
         .pipe(fileStream)
         .on("close", async () => {

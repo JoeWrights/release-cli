@@ -84,7 +84,9 @@ async function generateChangelog(version: string, options: ReleaseCliOptions) {
     ]
 
     cc({
-        preset: "angular",
+        preset: require("commit-and-tag-version/lib/preset-loader")(
+            require("commit-and-tag-version/defaults"),
+        ),
         releaseCount: 0,
         pkg: {
             transform: (pkg: Record<string, any>) => {
@@ -92,99 +94,99 @@ async function generateChangelog(version: string, options: ReleaseCliOptions) {
                 return pkg
             },
         },
-        config: {
-            writerOpts: {
-                transform: (commit: any, context: any) => {
-                    // 处理 BREAKING CHANGES
-                    if (commit.notes) {
-                        commit.notes.forEach((note: any) => {
-                            note.title = "BREAKING CHANGES"
-                        })
-                    }
+        // config: {
+        //     writerOpts: {
+        //         transform: (commit: any, context: any) => {
+        //             // 处理 BREAKING CHANGES
+        //             if (commit.notes) {
+        //                 commit.notes.forEach((note: any) => {
+        //                     note.title = "BREAKING CHANGES"
+        //                 })
+        //             }
 
-                    // 处理 scope
-                    if (commit.scope === "*") {
-                        commit.scope = ""
-                    }
+        //             // 处理 scope
+        //             if (commit.scope === "*") {
+        //                 commit.scope = ""
+        //             }
 
-                    // 处理 shortHash
-                    if (typeof commit.hash === "string") {
-                        commit.shortHash = commit.hash.slice(0, 7)
-                    }
+        //             // 处理 shortHash
+        //             if (typeof commit.hash === "string") {
+        //                 commit.shortHash = commit.hash.slice(0, 7)
+        //             }
 
-                    // 处理 subject 中的 issue 链接和用户提及
-                    if (typeof commit.subject === "string") {
-                        const issues: string[] = []
-                        let url = context.repository
-                            ? `${context.host}/${context.owner}/${context.repository}`
-                            : context.repoUrl
+        //             // 处理 subject 中的 issue 链接和用户提及
+        //             if (typeof commit.subject === "string") {
+        //                 const issues: string[] = []
+        //                 let url = context.repository
+        //                     ? `${context.host}/${context.owner}/${context.repository}`
+        //                     : context.repoUrl
 
-                        if (url) {
-                            url = `${url}/issues/`
-                            // Issue URLs
-                            commit.subject = commit.subject.replace(
-                                /#(\d+)/g,
-                                (_: string, issue: string) => {
-                                    issues.push(issue)
-                                    return `[#${issue}](${url}${issue})`
-                                },
-                            )
-                        }
+        //                 if (url) {
+        //                     url = `${url}/issues/`
+        //                     // Issue URLs
+        //                     commit.subject = commit.subject.replace(
+        //                         /#(\d+)/g,
+        //                         (_: string, issue: string) => {
+        //                             issues.push(issue)
+        //                             return `[#${issue}](${url}${issue})`
+        //                         },
+        //                     )
+        //                 }
 
-                        if (context.host) {
-                            // User URLs
-                            commit.subject = commit.subject.replace(
-                                /\B@([\da-z](?:-?[\da-z]){0,38})/g,
-                                (_: string, username: string) => {
-                                    if (username.includes(".")) {
-                                        return `@${username}`
-                                    }
-                                    return `[@${username}](${context.host}/${username})`
-                                },
-                            )
-                        }
+        //                 if (context.host) {
+        //                     // User URLs
+        //                     commit.subject = commit.subject.replace(
+        //                         /\B@([\da-z](?:-?[\da-z]){0,38})/g,
+        //                         (_: string, username: string) => {
+        //                             if (username.includes(".")) {
+        //                                 return `@${username}`
+        //                             }
+        //                             return `[@${username}](${context.host}/${username})`
+        //                         },
+        //                     )
+        //                 }
 
-                        // 移除已经处理的 references
-                        if (commit.references) {
-                            commit.references = commit.references.filter(
-                                (ref: any) => {
-                                    return !issues.includes(ref.issue)
-                                },
-                            )
-                        }
-                    }
+        //                 // 移除已经处理的 references
+        //                 if (commit.references) {
+        //                     commit.references = commit.references.filter(
+        //                         (ref: any) => {
+        //                             return !issues.includes(ref.issue)
+        //                         },
+        //                     )
+        //                 }
+        //             }
 
-                    // 将提交类型转换为对应的显示名称（在最后处理，确保所有类型都被保留）
-                    if (commit.type && types[commit.type]) {
-                        commit.type = types[commit.type]
-                    } else if (commit.type) {
-                        // 如果类型不在映射中，首字母大写
-                        commit.type =
-                            commit.type.charAt(0).toUpperCase() +
-                            commit.type.slice(1)
-                    }
+        //             // 将提交类型转换为对应的显示名称（在最后处理，确保所有类型都被保留）
+        //             if (commit.type && types[commit.type]) {
+        //                 commit.type = types[commit.type]
+        //             } else if (commit.type) {
+        //                 // 如果类型不在映射中，首字母大写
+        //                 commit.type =
+        //                     commit.type.charAt(0).toUpperCase() +
+        //                     commit.type.slice(1)
+        //             }
 
-                    // 返回 commit（不进行过滤，保留所有类型）
-                    return commit
-                },
-                groupBy: "type",
-                commitGroupsSort: (a: any, b: any) => {
-                    const aIndex = typeOrder.indexOf(`${a.title}`)
-                    const bIndex = typeOrder.indexOf(`${b.title}`)
-                    if (aIndex === -1 && bIndex === -1) {
-                        return `${a.title}`.localeCompare(`${b.title}`)
-                    }
-                    if (aIndex === -1) {
-                        return 1
-                    }
-                    if (bIndex === -1) {
-                        return -1
-                    }
-                    return aIndex - bIndex
-                },
-                commitsSort: ["scope", "subject"],
-            },
-        },
+        //             // 返回 commit（不进行过滤，保留所有类型）
+        //             return commit
+        //         },
+        //         groupBy: "type",
+        //         commitGroupsSort: (a: any, b: any) => {
+        //             const aIndex = typeOrder.indexOf(`${a.title}`)
+        //             const bIndex = typeOrder.indexOf(`${b.title}`)
+        //             if (aIndex === -1 && bIndex === -1) {
+        //                 return `${a.title}`.localeCompare(`${b.title}`)
+        //             }
+        //             if (aIndex === -1) {
+        //                 return 1
+        //             }
+        //             if (bIndex === -1) {
+        //                 return -1
+        //             }
+        //             return aIndex - bIndex
+        //         },
+        //         commitsSort: ["scope", "subject"],
+        //     },
+        // },
     })
         .pipe(fileStream)
         .on("close", async () => {

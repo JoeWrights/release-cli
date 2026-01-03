@@ -51,17 +51,18 @@ export const PRE_RELEASE = [
 /**
  * Commit types display name
  * @see https://www.conventionalcommits.org/en/v1.0.0/
+ * @see https://gitmoji.dev/
  */
 export const COMMIT_TYPES_DISPLAY_NAME: Record<CommitType, string> = {
-    [CommitType.FEAT]: "Features",
-    [CommitType.FIX]: "Bug Fixes",
-    [CommitType.PERF]: "Performance Improvements",
-    [CommitType.REFACTOR]: "Code Refactoring",
-    [CommitType.TEST]: "Tests",
-    [CommitType.BUILD]: "Build System",
-    [CommitType.CI]: "Continuous Integration",
-    [CommitType.REVERT]: "Reverts",
-    [CommitType.DOCS]: "Documentation",
-    [CommitType.STYLE]: "Styles",
-    [CommitType.CHORE]: "Chores",
+    [CommitType.FEAT]: "✨ Features",
+    [CommitType.FIX]: "🐛 Bug Fixes",
+    [CommitType.PERF]: "⚡ Performance Improvements",
+    [CommitType.REFACTOR]: "♻️ Code Refactoring",
+    [CommitType.TEST]: "✅ Tests",
+    [CommitType.BUILD]: "📦 Build System",
+    [CommitType.CI]: "👷 Continuous Integration",
+    [CommitType.REVERT]: "⏪ Reverts",
+    [CommitType.DOCS]: "📝 Documentation",
+    [CommitType.STYLE]: "💄 Styles",
+    [CommitType.CHORE]: "🔧 Chores",
 }

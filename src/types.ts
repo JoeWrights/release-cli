@@ -75,9 +75,32 @@ export enum CommitType {
  * Release cli options
  */
 export interface ReleaseCliOptions {
+    /**
+     * 是否在发布前自动执行构建命令
+     */
     autoBuild?: boolean
+    /**
+     * 是否自动创建并推送 Git tag
+     */
     autoTag?: boolean
+    /**
+     * tag 前缀
+     */
+    tagPrefix?: string
+    /**
+     * Tag 后缀
+     */
     tagSuffix?: string
+    /**
+     * 禁止发布的分支列表
+     */
     branchBlacklist?: string[]
+    /**
+     * Commit Type 展示名称
+     */
+    commitTypeDisplayName?: Record<CommitType, string>
+    /**
+     * package.json 文件的缩进空格数
+     */
     packageJsonFileIndent?: number
 }

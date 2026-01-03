@@ -30,7 +30,8 @@ async function executeGitCommand(version: string, options: ReleaseCliOptions) {
     await execa("git", ["push", "origin", curBranch], { stdio: "inherit" })
 
     if (options?.autoTag) {
-        const formattedVersion = `v${version}${options?.tagSuffix || ""}`
+        const formattedVersion = `${options?.tagPrefix ||
+            "v"}${version}${options?.tagSuffix || ""}`
         await execa(
             "git",
             [
@@ -56,6 +57,12 @@ async function executeGitCommand(version: string, options: ReleaseCliOptions) {
  */
 async function generateChangelog(version: string, options: ReleaseCliOptions) {
     const fileStream = getChangelogFileStream()
+
+    // commit type 展示名称
+    const typeDisplayName = {
+        ...COMMIT_TYPES_DISPLAY_NAME,
+        ...(options.commitTypeDisplayName || {}),
+    }
 
     // 定义排序顺序
     const typeOrder = [
@@ -97,20 +104,19 @@ async function generateChangelog(version: string, options: ReleaseCliOptions) {
 
                     // 处理 revert 类型（需要在类型转换之前处理）
                     if (commit.revert) {
-                        commit.type =
-                            COMMIT_TYPES_DISPLAY_NAME.revert || "Reverts"
+                        commit.type = typeDisplayName.revert || "Reverts"
                     }
 
                     // 将提交类型转换为对应的显示名称
                     // 重要：先转换类型，确保所有类型都被识别和保留
                     if (
                         commit.type &&
-                        COMMIT_TYPES_DISPLAY_NAME[
+                        typeDisplayName[
                             commit.type as keyof typeof COMMIT_TYPES_DISPLAY_NAME
                         ]
                     ) {
                         commit.type =
-                            COMMIT_TYPES_DISPLAY_NAME[
+                            typeDisplayName[
                                 commit.type as keyof typeof COMMIT_TYPES_DISPLAY_NAME
                             ]
                     } else if (commit.type) {

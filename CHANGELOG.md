@@ -1,4 +1,4 @@
-## v1.0.5 (2026-01-03)
+## v1.0.6 (2026-01-03)
 
 
 ### ✨ Features
@@ -68,6 +68,7 @@
 * v1.0.2-alpha.8 changelog [ci skip] ([b2388f6](https://github.com/JoeWrights/release-cli/commit/b2388f6cfbba6ee355f0aa7492a862f680357a94))
 * v1.0.3 changelog [ci skip] ([310274c](https://github.com/JoeWrights/release-cli/commit/310274cdd946b1e27153d13daef5d6e22f859fcd))
 * v1.0.4 changelog [ci skip] ([daec414](https://github.com/JoeWrights/release-cli/commit/daec414fbb5212712a0b6bcb636dfc446d8507cf))
+* v1.0.5 changelog [ci skip] ([9fdf5a5](https://github.com/JoeWrights/release-cli/commit/9fdf5a5f9a1904c958e15234bc7dd604e9639bd5))
 
 
 ### 📝 Documentation

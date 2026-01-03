@@ -145,6 +145,8 @@ async function release(options?: Record<string, any>) {
         return
     }
 
+    console.log("start check npm package version")
+
     // 检查npm包输入该版本是否存在
     const { stdout: npmPackageVersion } = execa.commandSync(
         `npm view ${getPackageJson().name} version`,
@@ -158,9 +160,15 @@ async function release(options?: Record<string, any>) {
         )
     }
 
+    console.log("end check npm package version")
+
+    console.log("start read package.json")
+
     const pkgContent = JSON.parse(
         fs.readFileSync(getPackageJsonPath(), "utf-8"),
     )
+
+    console.log("end read package.json")
 
     pkgContent.version = version
 

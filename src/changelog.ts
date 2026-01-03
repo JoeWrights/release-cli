@@ -107,26 +107,26 @@ async function generateChangelog(version: string, options: ReleaseCliOptions) {
             return commit
         },
         config: {
-            writerOpts: {
-                // 只覆盖排序相关的选项，不覆盖 transform
-                // transform 会使用 preset 的默认值
-                groupBy: "type",
-                commitGroupsSort: (a: any, b: any) => {
-                    const aIndex = typeOrder.indexOf(`${a.title}`)
-                    const bIndex = typeOrder.indexOf(`${b.title}`)
-                    if (aIndex === -1 && bIndex === -1) {
-                        return `${a.title}`.localeCompare(`${b.title}`)
-                    }
-                    if (aIndex === -1) {
-                        return 1
-                    }
-                    if (bIndex === -1) {
-                        return -1
-                    }
-                    return aIndex - bIndex
-                },
-                commitsSort: ["scope", "subject"],
-            },
+            // writerOpts: {
+            //     // 只覆盖排序相关的选项，不覆盖 transform
+            //     // transform 会使用 preset 的默认值
+            //     groupBy: "type",
+            //     commitGroupsSort: (a: any, b: any) => {
+            //         const aIndex = typeOrder.indexOf(`${a.title}`)
+            //         const bIndex = typeOrder.indexOf(`${b.title}`)
+            //         if (aIndex === -1 && bIndex === -1) {
+            //             return `${a.title}`.localeCompare(`${b.title}`)
+            //         }
+            //         if (aIndex === -1) {
+            //             return 1
+            //         }
+            //         if (bIndex === -1) {
+            //             return -1
+            //         }
+            //         return aIndex - bIndex
+            //     },
+            //     commitsSort: ["scope", "subject"],
+            // },
         },
     })
         .pipe(fileStream)

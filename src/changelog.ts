@@ -53,6 +53,36 @@ async function executeGitCommand(version: string, options: ReleaseCliOptions) {
 async function generateChangelog(version: string, options: ReleaseCliOptions) {
     const fileStream = getChangelogFileStream()
 
+    // 扩展支持的提交类型映射
+    const types: Record<string, string> = {
+        feat: "Features",
+        fix: "Bug Fixes",
+        perf: "Performance Improvements",
+        revert: "Reverts",
+        docs: "Documentation",
+        style: "Styles",
+        chore: "Chores",
+        refactor: "Code Refactoring",
+        test: "Tests",
+        build: "Build System",
+        ci: "Continuous Integration",
+    }
+
+    // 定义排序顺序
+    const typeOrder = [
+        "Features",
+        "Bug Fixes",
+        "Performance Improvements",
+        "Code Refactoring",
+        "Documentation",
+        "Styles",
+        "Tests",
+        "Build System",
+        "Continuous Integration",
+        "Chores",
+        "Reverts",
+    ]
+
     cc({
         preset: "angular",
         releaseCount: 0,
@@ -60,6 +90,38 @@ async function generateChangelog(version: string, options: ReleaseCliOptions) {
             transform: (pkg) => {
                 pkg.version = `v${version}`
                 return pkg
+            },
+        },
+        transform: (commit) => {
+            // 将提交类型转换为对应的显示名称
+            if (commit.type && types[commit.type]) {
+                commit.type = types[commit.type]
+            } else if (commit.type) {
+                // 如果类型不在映射中，首字母大写
+                commit.type =
+                    commit.type.charAt(0).toUpperCase() + commit.type.slice(1)
+            }
+
+            return commit
+        },
+        config: {
+            writerOpts: {
+                groupBy: "type",
+                commitGroupsSort: (a, b) => {
+                    const aIndex = typeOrder.indexOf(`${a.title}`)
+                    const bIndex = typeOrder.indexOf(`${b.title}`)
+                    if (aIndex === -1 && bIndex === -1) {
+                        return `${a.title}`.localeCompare(`${b.title}`)
+                    }
+                    if (aIndex === -1) {
+                        return 1
+                    }
+                    if (bIndex === -1) {
+                        return -1
+                    }
+                    return aIndex - bIndex
+                },
+                commitsSort: ["scope", "subject"],
             },
         },
     })

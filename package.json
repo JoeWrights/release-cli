@@ -1,7 +1,7 @@
 {
     "name": "@joewrights/release-cli",
     "private": true,
-    "version": "1.0.2-alpha.16",
+    "version": "1.0.2-alpha.15",
     "description": "A CLI tool for releasing projects",
     "author": "1035208578@qq.com",
     "license": "MIT",
@@ -26,8 +26,7 @@
     },
     "dependencies": {
         "commander": "7.2.0",
-        "commit-and-tag-version": "12.5.1",
-        "conventional-changelog": "5.1.0",
+        "conventional-changelog": "^4.0.0",
         "execa": "5.1.1",
         "inquirer": "8.2.4",
         "kolorist": "^1.8.0",

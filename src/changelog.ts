@@ -97,13 +97,13 @@ async function generateChangelog(version: string, options: ReleaseCliOptions) {
         transform: (commit: any, cb: (error: any, commit: any) => void) => {
             // transform 必须调用回调函数，否则流无法正常结束
             // 将提交类型转换为对应的显示名称
-            if (commit.type && types[commit.type]) {
-                commit.type = types[commit.type]
-            } else if (commit.type) {
-                // 如果类型不在映射中，首字母大写
-                commit.type =
-                    commit.type.charAt(0).toUpperCase() + commit.type.slice(1)
-            }
+            // if (commit.type && types[commit.type]) {
+            //     commit.type = types[commit.type]
+            // } else if (commit.type) {
+            //     // 如果类型不在映射中，首字母大写
+            //     commit.type =
+            //         commit.type.charAt(0).toUpperCase() + commit.type.slice(1)
+            // }
             // 调用回调函数，传递修改后的 commit
             cb(null, commit)
         },

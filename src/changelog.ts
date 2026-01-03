@@ -84,11 +84,11 @@ async function generateChangelog(version: string, options: ReleaseCliOptions) {
         typeDisplayName[CommitType.ACCESSIBILITY],
     ].filter(Boolean)
 
-    // 使用 Map 缓存索引，避免每次比较都调用 indexOf
-    const typeOrderMap = new Map<string, number>()
+    // 创建类型名称到排序权重的映射（用于快速查找排序顺序）
+    const typeSortMap = new Map<string, number>()
     typeOrder.forEach((type, index) => {
         if (type) {
-            typeOrderMap.set(type, index)
+            typeSortMap.set(type, index)
         }
     })
 
@@ -137,6 +137,14 @@ async function generateChangelog(version: string, options: ReleaseCliOptions) {
                         commit.type =
                             commit.type.charAt(0).toUpperCase() +
                             commit.type.slice(1)
+                    }
+
+                    // 为 commit 添加排序权重（存储在属性中，用于排序）
+                    if (commit.type) {
+                        const sortOrder = typeSortMap.get(commit.type)
+                        // 使用一个属性来存储排序权重
+                        commit.sortOrder =
+                            sortOrder !== undefined ? sortOrder : 9999
                     }
 
                     // 如果没有类型，跳过这个提交（可能是 merge commit 等）
@@ -200,29 +208,18 @@ async function generateChangelog(version: string, options: ReleaseCliOptions) {
                     return commit
                 },
                 groupBy: "type",
-                // 优化的自定义排序函数
-                // 使用简单的数字比较，避免字符串操作
+                // 使用排序权重进行排序，性能更好
                 commitGroupsSort: (a: any, b: any) => {
-                    // 直接获取 title，避免字符串转换
-                    const aTitle = a.title
-                    const bTitle = b.title
-
-                    // 快速查找索引
-                    const aIndex = typeOrderMap.get(aTitle)
-                    const bIndex = typeOrderMap.get(bTitle)
-
-                    // 如果都在 Map 中，直接比较索引
-                    if (aIndex !== undefined && bIndex !== undefined) {
-                        return aIndex - bIndex
-                    }
-
-                    // 如果都不在 Map 中，使用字符串比较
-                    if (aIndex === undefined && bIndex === undefined) {
-                        return aTitle < bTitle ? -1 : aTitle > bTitle ? 1 : 0
-                    }
-
-                    // 一个在 Map 中，一个不在，在 Map 中的排在前面
-                    return aIndex !== undefined ? -1 : 1
+                    // 从第一个 commit 中获取排序权重（所有相同类型的 commit 权重相同）
+                    const aSort =
+                        a.commits && a.commits[0]
+                            ? a.commits[0].sortOrder ?? 9999
+                            : 9999
+                    const bSort =
+                        b.commits && b.commits[0]
+                            ? b.commits[0].sortOrder ?? 9999
+                            : 9999
+                    return aSort - bSort
                 },
                 commitsSort: ["scope", "subject"],
             },

@@ -3,7 +3,7 @@ import cc from "conventional-changelog"
 import execa from "execa"
 
 import { COMMIT_TYPES_DISPLAY_NAME } from "./constants"
-import { ReleaseCliOptions } from "./types"
+import { CommitType, ReleaseCliOptions } from "./types"
 import { getChangelogFileStream } from "./utils"
 
 // 动态导入 angular preset
@@ -59,13 +59,30 @@ async function generateChangelog(version: string, options: ReleaseCliOptions) {
     const fileStream = getChangelogFileStream()
 
     // commit type 展示名称
-    const typeDisplayName = {
+    const typeDisplayName: Record<CommitType, string> = {
         ...COMMIT_TYPES_DISPLAY_NAME,
         ...(options.commitTypeDisplayName || {}),
     }
 
     // 定义排序顺序
-    const typeOrder = Object.values(typeDisplayName)
+    const typeOrder = [
+        typeDisplayName[CommitType.FEAT],
+        typeDisplayName[CommitType.FIX],
+        typeDisplayName[CommitType.PERF],
+        typeDisplayName[CommitType.REFACTOR],
+        typeDisplayName[CommitType.STYLE],
+        typeDisplayName[CommitType.TYPES],
+        typeDisplayName[CommitType.I18N],
+        typeDisplayName[CommitType.DEPS],
+        typeDisplayName[CommitType.TEST],
+        typeDisplayName[CommitType.BUILD],
+        typeDisplayName[CommitType.CI],
+        typeDisplayName[CommitType.REVERT],
+        typeDisplayName[CommitType.DOCS],
+        typeDisplayName[CommitType.CHORE],
+        typeDisplayName[CommitType.SECURITY],
+        typeDisplayName[CommitType.ACCESSIBILITY],
+    ]
 
     // 加载 angular preset 配置（angularPreset 本身就是一个 Promise）
     const angularConfig = await angularPreset

@@ -21,6 +21,57 @@ export enum PreReleaseType {
 }
 
 /**
+ * Commit type
+ * @see https://www.conventionalcommits.org/en/v1.0.0/
+ */
+export enum CommitType {
+    /**
+     * Features
+     */
+    FEAT = "feat",
+    /**
+     * Bug fixes
+     */
+    FIX = "fix",
+    /**
+     * Performance improvements
+     */
+    PERF = "perf",
+    /**
+     * Code refactoring
+     */
+    REFACTOR = "refactor",
+    /**
+     * Tests
+     */
+    TEST = "test",
+    /**
+     * Build system
+     */
+    BUILD = "build",
+    /**
+     * Continuous integration
+     */
+    CI = "ci",
+    /**
+     * Reverts
+     */
+    REVERT = "revert",
+    /**
+     * Documentation
+     */
+    DOCS = "docs",
+    /**
+     * Styles
+     */
+    STYLE = "style",
+    /**
+     * Chores
+     */
+    CHORE = "chore",
+}
+
+/**
  * Release cli options
  */
 export interface ReleaseCliOptions {

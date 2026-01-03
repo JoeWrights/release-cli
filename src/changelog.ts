@@ -200,9 +200,30 @@ async function generateChangelog(version: string, options: ReleaseCliOptions) {
                     return commit
                 },
                 groupBy: "type",
-                // 使用字符串排序，性能更好
-                // 由于类型名称已经包含 emoji，按字母顺序排序也能保持合理的顺序
-                commitGroupsSort: "title",
+                // 优化的自定义排序函数
+                // 使用简单的数字比较，避免字符串操作
+                commitGroupsSort: (a: any, b: any) => {
+                    // 直接获取 title，避免字符串转换
+                    const aTitle = a.title
+                    const bTitle = b.title
+
+                    // 快速查找索引
+                    const aIndex = typeOrderMap.get(aTitle)
+                    const bIndex = typeOrderMap.get(bTitle)
+
+                    // 如果都在 Map 中，直接比较索引
+                    if (aIndex !== undefined && bIndex !== undefined) {
+                        return aIndex - bIndex
+                    }
+
+                    // 如果都不在 Map 中，使用字符串比较
+                    if (aIndex === undefined && bIndex === undefined) {
+                        return aTitle < bTitle ? -1 : aTitle > bTitle ? 1 : 0
+                    }
+
+                    // 一个在 Map 中，一个不在，在 Map 中的排在前面
+                    return aIndex !== undefined ? -1 : 1
+                },
                 commitsSort: ["scope", "subject"],
             },
         },

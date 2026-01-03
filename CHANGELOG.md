@@ -1,4 +1,4 @@
-## v1.0.15 (2026-01-03)
+## v1.0.16-alpha.0 (2026-01-03)
 
 
 ### ♻️ Code Refactoring
@@ -38,6 +38,7 @@
 * bump version to 1.0.2-alpha.9 and enhance changelog transformation logic with custom commit type mapping and sorting ([5086d51](https://github.com/JoeWrights/release-cli/commit/5086d514b0075ad8f04cab777cc2c41f8688a66d))
 * comment out changelog transformation logic for commit types ([e30433b](https://github.com/JoeWrights/release-cli/commit/e30433bc46d1ece26028bc214adb41436332d206))
 * comment out sorting logic in changelog generation for future reference ([f1d1577](https://github.com/JoeWrights/release-cli/commit/f1d1577909a8b9ee25bbdae54de309356f0ec242))
+* disable grouping and sorting options in changelog generation for simplification ([d48cc77](https://github.com/JoeWrights/release-cli/commit/d48cc77637d24e9bd378e812b41fdeeb42465fa5))
 * downgrade conventional-changelog dependency and update changelog generation preset to use angular format ([d64a8f0](https://github.com/JoeWrights/release-cli/commit/d64a8f0e6505d23accba61123c4f8bcf24d1b71c))
 * enhance changelog transformation logic to improve commit processing and type handling ([b4b70a6](https://github.com/JoeWrights/release-cli/commit/b4b70a62b7ec5db2e8df57360dcff783dd35ce63))
 * enhance changelog transformation logic to include detailed commit processing and maintain type mapping ([ef34935](https://github.com/JoeWrights/release-cli/commit/ef34935e13b620747f0b5bdcac7882c9bf89bcce))
@@ -68,6 +69,7 @@
 * v1.0.13 changelog [ci skip] ([aa10532](https://github.com/JoeWrights/release-cli/commit/aa10532ee0f38ca9522dc08b1dac0153883be6e6))
 * v1.0.14 changelog [ci skip] ([404a5bb](https://github.com/JoeWrights/release-cli/commit/404a5bb2ed1b388568c8c4b206194b22a978219f))
 * v1.0.14-alpha.0 changelog [ci skip] ([9be2400](https://github.com/JoeWrights/release-cli/commit/9be2400d109be48922e32fd9e6dc008d49bb400b))
+* v1.0.15 changelog [ci skip] ([5cee12e](https://github.com/JoeWrights/release-cli/commit/5cee12ece7410ec9db9c5fd85d85c4cdfae04721))
 * v1.0.15-alpha.0 changelog [ci skip] ([8c0e413](https://github.com/JoeWrights/release-cli/commit/8c0e41308d719d489047cc530be81de57cf40a4d))
 * v1.0.2 changelog [ci skip] ([f994736](https://github.com/JoeWrights/release-cli/commit/f994736d462ee150d8bf0fa11e6298a3224c987f))
 * v1.0.2-alpha.0 changelog [ci skip] ([5328162](https://github.com/JoeWrights/release-cli/commit/5328162742cc01257a334fc220c09cddcb372605))

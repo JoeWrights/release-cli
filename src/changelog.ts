@@ -199,27 +199,27 @@ async function generateChangelog(version: string, options: ReleaseCliOptions) {
                     // 返回 commit（保留所有类型，不进行过滤）
                     return commit
                 },
-                groupBy: "type",
-                commitGroupsSort: (a: any, b: any) => {
-                    const aTitle = `${a.title}`
-                    const bTitle = `${b.title}`
+                // groupBy: "type",
+                // commitGroupsSort: (a: any, b: any) => {
+                //     const aTitle = `${a.title}`
+                //     const bTitle = `${b.title}`
 
-                    // 使用 Map 快速查找索引，避免每次比较都遍历数组
-                    const aIndex = typeOrderMap.get(aTitle)
-                    const bIndex = typeOrderMap.get(bTitle)
+                //     // 使用 Map 快速查找索引，避免每次比较都遍历数组
+                //     const aIndex = typeOrderMap.get(aTitle)
+                //     const bIndex = typeOrderMap.get(bTitle)
 
-                    if (aIndex === undefined && bIndex === undefined) {
-                        return aTitle.localeCompare(bTitle)
-                    }
-                    if (aIndex === undefined) {
-                        return 1
-                    }
-                    if (bIndex === undefined) {
-                        return -1
-                    }
-                    return aIndex - bIndex
-                },
-                commitsSort: ["scope", "subject"],
+                //     if (aIndex === undefined && bIndex === undefined) {
+                //         return aTitle.localeCompare(bTitle)
+                //     }
+                //     if (aIndex === undefined) {
+                //         return 1
+                //     }
+                //     if (bIndex === undefined) {
+                //         return -1
+                //     }
+                //     return aIndex - bIndex
+                // },
+                // commitsSort: ["scope", "subject"],
             },
         },
     })

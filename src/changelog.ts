@@ -7,7 +7,7 @@ import { CommitType, ReleaseCliOptions } from "./types"
 import { getChangelogFileStream } from "./utils"
 
 // 动态导入 angular preset
-const angularPreset = require("conventional-changelog-angular")
+// const angularPreset = require("conventional-changelog-angular")
 
 /**
  * Execute the git command

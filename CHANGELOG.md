@@ -1,4 +1,4 @@
-## v1.0.11-alpha.0 (2026-01-03)
+## v1.0.11 (2026-01-03)
 
 
 ### Features
@@ -33,9 +33,11 @@
 * enhance changelog transformation logic to improve commit processing and type handling ([b4b70a6](https://github.com/JoeWrights/release-cli/commit/b4b70a62b7ec5db2e8df57360dcff783dd35ce63))
 * enhance changelog transformation logic to include detailed commit processing and maintain type mapping ([ef34935](https://github.com/JoeWrights/release-cli/commit/ef34935e13b620747f0b5bdcac7882c9bf89bcce))
 * fix changelog generation by correcting pipe closure syntax ([a5ca2ae](https://github.com/JoeWrights/release-cli/commit/a5ca2ae1e091e8b65f80f6486ac5e130ff090333))
+* further optimize changelog sorting by eliminating commit weight storage for enhanced performance ([502a356](https://github.com/JoeWrights/release-cli/commit/502a356ddbfa7b33c2dcdf19cdff440af779bebd))
 * improve changelog sorting with optimized custom function for better performance ([b6c1e49](https://github.com/JoeWrights/release-cli/commit/b6c1e499f81078bd740167893ac09dfb422a19ac))
 * integrate angular preset for enhanced changelog generation and improve commit type handling ([232c71d](https://github.com/JoeWrights/release-cli/commit/232c71d502a18db8f14ec28a52feb05283ce5afe))
 * optimize changelog generation by implementing a Map for type sorting and enhancing the sorting logic ([5c28c89](https://github.com/JoeWrights/release-cli/commit/5c28c89fba5692b69d57e8c816be6bd84294fa5b))
+* refactor changelog sorting to use type-based weight mapping for improved performance ([9ac46e3](https://github.com/JoeWrights/release-cli/commit/9ac46e3d10b649f1e0d963dc6e4dfccd4ef274bc))
 * refine changelog transformation logic to restore commit type mapping and maintain console logging for debugging ([222f3ff](https://github.com/JoeWrights/release-cli/commit/222f3ffacf0a398a87345b2c397ff826cdeeaf79))
 * remove changelog sorting configuration and related options ([ef14b4f](https://github.com/JoeWrights/release-cli/commit/ef14b4f41ace7aa5f05be5d752de7ec10ae86425))
 * remove CHANGELOG.md as it is no longer needed ([a8cf938](https://github.com/JoeWrights/release-cli/commit/a8cf93807a19a5b846c0afeb0ca03a332342ee5e))
@@ -51,6 +53,7 @@
 * v1.0.0 changelog [ci skip] ([e87daf1](https://github.com/JoeWrights/release-cli/commit/e87daf1474fbe12ecfdf349c62b8c159e3863960))
 * v1.0.1 changelog [ci skip] ([ce6eb72](https://github.com/JoeWrights/release-cli/commit/ce6eb72e3fe3bd4267a98f9438e0361eb74a1a27))
 * v1.0.10 changelog [ci skip] ([7221f62](https://github.com/JoeWrights/release-cli/commit/7221f62f44a3a3b69f1b78d264e3e8365b90c71b))
+* v1.0.11-alpha.0 changelog [ci skip] ([de842ff](https://github.com/JoeWrights/release-cli/commit/de842ff68afd470dd60feccfd43b7dd5753dc111))
 * v1.0.2 changelog [ci skip] ([f994736](https://github.com/JoeWrights/release-cli/commit/f994736d462ee150d8bf0fa11e6298a3224c987f))
 * v1.0.2-alpha.0 changelog [ci skip] ([5328162](https://github.com/JoeWrights/release-cli/commit/5328162742cc01257a334fc220c09cddcb372605))
 * v1.0.2-alpha.1 changelog [ci skip] ([22f2b61](https://github.com/JoeWrights/release-cli/commit/22f2b6173785dc48209e6fdff0a489fb882c578e))

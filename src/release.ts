@@ -145,22 +145,34 @@ async function release(options?: Record<string, any>) {
         return
     }
 
-    console.log("start check npm package version")
-
     // 检查npm包输入该版本是否存在
-    const { stdout: npmPackageVersion } = execa.commandSync(
-        `npm view ${getPackageJson().name} version`,
-    )
+    // 使用配置的 registry，默认使用淘宝镜像以提升速度
+    const registry =
+        mergedConfig.npmRegistry || "https://registry.npmmirror.com"
+    const packageName = getPackageJson().name
 
-    if (npmPackageVersion && semver.eq(version, npmPackageVersion)) {
-        return showError(
-            new Error(
-                `npm包 ${getPackageJson().name} 已存在该版本，请重新输入`,
-            ),
+    try {
+        // 使用 --registry 参数指定镜像地址，避免修改全局 npm 配置
+        const { stdout: npmPackageVersion } = execa.commandSync(
+            `npm view ${packageName} version --registry=${registry}`,
+            {
+                timeout: 10000, // 设置 10 秒超时
+            },
+        )
+
+        if (npmPackageVersion && semver.eq(version, npmPackageVersion)) {
+            return showError(
+                new Error(`npm包 ${packageName} 已存在该版本，请重新输入`),
+            )
+        }
+    } catch (error) {
+        // 如果查询失败（可能是网络问题或包不存在），记录警告但继续执行
+        // 这样可以避免因为网络问题阻塞发布流程
+        const errorMessage = error instanceof Error ? error.message : "未知错误"
+        console.warn(
+            `警告: 无法检查 npm 包版本 (${errorMessage})，将继续发布流程`,
         )
     }
-
-    console.log("end check npm package version")
 
     console.log("start read package.json")
 

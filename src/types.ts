@@ -161,4 +161,10 @@ export interface ReleaseCliOptions {
      * - 2+: 生成最近 N 个版本
      */
     releaseCount?: number
+    /**
+     * NPM registry 地址
+     * 默认使用淘宝镜像：https://registry.npmmirror.com
+     * 也可以使用其他镜像，如：https://registry.npmjs.org
+     */
+    npmRegistry?: string
 }

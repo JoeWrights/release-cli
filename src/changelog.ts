@@ -5,6 +5,9 @@ import execa from "execa"
 import { ReleaseCliOptions } from "./types"
 import { getChangelogFileStream } from "./utils"
 
+// 动态导入 angular preset
+const angularPreset = require("conventional-changelog-angular")
+
 /**
  * Execute the git command
  * @param version The version
@@ -83,8 +86,10 @@ async function generateChangelog(version: string, options: ReleaseCliOptions) {
         "Reverts",
     ]
 
+    // 加载 angular preset 配置
+    const angularConfig = await angularPreset()
+
     cc({
-        preset: "angular",
         releaseCount: 0,
         pkg: {
             transform: (pkg: Record<string, any>) => {
@@ -93,13 +98,36 @@ async function generateChangelog(version: string, options: ReleaseCliOptions) {
             },
         },
         config: {
+            parserOpts: angularConfig.parserOpts,
             writerOpts: {
+                ...angularConfig.writerOpts,
                 transform: (commit: any, context: any) => {
-                    // 处理 BREAKING CHANGES
+                    // 首先处理 BREAKING CHANGES
                     if (commit.notes && commit.notes.length > 0) {
                         commit.notes.forEach((note: any) => {
                             note.title = "BREAKING CHANGES"
                         })
+                    }
+
+                    // 处理 revert 类型（需要在类型转换之前处理）
+                    if (commit.revert) {
+                        commit.type = types.revert || "Reverts"
+                    }
+
+                    // 将提交类型转换为对应的显示名称
+                    // 重要：先转换类型，确保所有类型都被识别和保留
+                    if (commit.type && types[commit.type]) {
+                        commit.type = types[commit.type]
+                    } else if (commit.type) {
+                        // 如果类型不在映射中，首字母大写
+                        commit.type =
+                            commit.type.charAt(0).toUpperCase() +
+                            commit.type.slice(1)
+                    }
+
+                    // 如果没有类型，跳过这个提交（可能是 merge commit 等）
+                    if (!commit.type) {
+                        return
                     }
 
                     // 处理 scope
@@ -152,22 +180,6 @@ async function generateChangelog(version: string, options: ReleaseCliOptions) {
                                 },
                             )
                         }
-                    }
-
-                    // 将提交类型转换为对应的显示名称
-                    // 重要：不要过滤任何类型，保留所有提交
-                    if (commit.type && types[commit.type]) {
-                        commit.type = types[commit.type]
-                    } else if (commit.type) {
-                        // 如果类型不在映射中，首字母大写
-                        commit.type =
-                            commit.type.charAt(0).toUpperCase() +
-                            commit.type.slice(1)
-                    }
-
-                    // 处理 revert 类型
-                    if (commit.revert) {
-                        commit.type = types.revert || "Reverts"
                     }
 
                     // 返回 commit（保留所有类型，不进行过滤）

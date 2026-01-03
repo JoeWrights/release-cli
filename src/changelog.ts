@@ -66,22 +66,22 @@ async function generateChangelog(version: string, options: ReleaseCliOptions) {
 
     // 定义排序顺序
     const typeOrder = [
-        typeDisplayName[CommitType.FEAT],
-        typeDisplayName[CommitType.FIX],
-        typeDisplayName[CommitType.PERF],
-        typeDisplayName[CommitType.REFACTOR],
-        typeDisplayName[CommitType.STYLE],
-        typeDisplayName[CommitType.TYPES],
-        typeDisplayName[CommitType.I18N],
-        typeDisplayName[CommitType.DEPS],
-        typeDisplayName[CommitType.TEST],
-        typeDisplayName[CommitType.BUILD],
-        typeDisplayName[CommitType.CI],
-        typeDisplayName[CommitType.REVERT],
-        typeDisplayName[CommitType.DOCS],
-        typeDisplayName[CommitType.CHORE],
-        typeDisplayName[CommitType.SECURITY],
-        typeDisplayName[CommitType.ACCESSIBILITY],
+        "✨ Features",
+        "🐛 Bug Fixes",
+        "⚡ Performance Improvements",
+        "♻️ Code Refactoring",
+        "✅ Tests",
+        "📦 Build System",
+        "👷 Continuous Integration",
+        "⏪ Reverts",
+        "📝 Documentation",
+        "💄 Styles",
+        "🔧 Chores",
+        "🔒 Security",
+        "🏷️ Types",
+        "🌐 Internationalization",
+        "♿️ Accessibility",
+        "⬆️ Dependencies",
     ]
 
     // 加载 angular preset 配置（angularPreset 本身就是一个 Promise）

@@ -1,9 +1,15 @@
-## v1.0.2-alpha.20 (2026-01-03)
+## v1.0.2-alpha.21 (2026-01-03)
 
 
 ### Features
 
 * Enhance changelog generation by adding support for custom commit type mappings and sorting order ([5c42024](https://github.com/JoeWrights/release-cli/commit/5c420242561d0480a76750a6db881740feecfc08))
+* Integrate conventional-changelog-angular for enhanced changelog generation and add repository metadata to package.json ([7c3075f](https://github.com/JoeWrights/release-cli/commit/7c3075f2b2940c1f2a37f215e17a89d7f671b99e))
+
+
+### Code Refactoring
+
+* Introduce CommitType enum and COMMIT_TYPES_DISPLAY_NAME for improved commit type handling in changelog generation ([3f16e0b](https://github.com/JoeWrights/release-cli/commit/3f16e0b4a89057538d0f2c92970817bd6b8795c8))
 
 
 ### Documentation
@@ -53,7 +59,13 @@
 * v1.0.2-alpha.17 changelog [ci skip] ([8b4f3ba](https://github.com/JoeWrights/release-cli/commit/8b4f3bab821b33d3f91458be59037f9fc468b70e))
 * v1.0.2-alpha.18 changelog [ci skip] ([bf72a0a](https://github.com/JoeWrights/release-cli/commit/bf72a0a00a2597ea48b27da794d8ff60d1c286a6))
 * v1.0.2-alpha.2 changelog [ci skip] ([b0abab2](https://github.com/JoeWrights/release-cli/commit/b0abab263a9f43e5596442016af8f9156423f343))
+* v1.0.2-alpha.20 changelog [ci skip] ([fe6558c](https://github.com/JoeWrights/release-cli/commit/fe6558c058526604181168eff14ee65018e32f76))
 * v1.0.2-alpha.8 changelog [ci skip] ([b2388f6](https://github.com/JoeWrights/release-cli/commit/b2388f6cfbba6ee355f0aa7492a862f680357a94))
+
+
+### Debug
+
+* add console logging for commit group sorting in changelog generation ([5948b2f](https://github.com/JoeWrights/release-cli/commit/5948b2f13b6642f57f6a6499a27f6e1c18e521d3))
 
 
 

@@ -200,25 +200,9 @@ async function generateChangelog(version: string, options: ReleaseCliOptions) {
                     return commit
                 },
                 groupBy: "type",
-                commitGroupsSort: (a: any, b: any) => {
-                    const aTitle = `${a.title}`
-                    const bTitle = `${b.title}`
-
-                    // 使用 Map 快速查找索引，避免每次比较都遍历数组
-                    const aIndex = typeOrderMap.get(aTitle)
-                    const bIndex = typeOrderMap.get(bTitle)
-
-                    if (aIndex === undefined && bIndex === undefined) {
-                        return aTitle.localeCompare(bTitle)
-                    }
-                    if (aIndex === undefined) {
-                        return 1
-                    }
-                    if (bIndex === undefined) {
-                        return -1
-                    }
-                    return aIndex - bIndex
-                },
+                // 使用字符串排序，性能更好
+                // 由于类型名称已经包含 emoji，按字母顺序排序也能保持合理的顺序
+                commitGroupsSort: "title",
                 commitsSort: ["scope", "subject"],
             },
         },

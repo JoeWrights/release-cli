@@ -1,4 +1,10 @@
-## v1.0.6 (2026-01-03)
+## v1.0.7 (2026-01-03)
+
+
+### ♻️ Code Refactoring
+
+* Introduce CommitType enum and COMMIT_TYPES_DISPLAY_NAME for improved commit type handling in changelog generation ([3f16e0b](https://github.com/JoeWrights/release-cli/commit/3f16e0b4a89057538d0f2c92970817bd6b8795c8))
+* Update changelog generation to use CommitType enum for type display names and define a comprehensive sorting order for commit types ([a8f3c36](https://github.com/JoeWrights/release-cli/commit/a8f3c36b11d4d14dafdc3bcabe6fafbc17ad3d31))
 
 
 ### ✨ Features
@@ -9,10 +15,10 @@
 * Integrate conventional-changelog-angular for enhanced changelog generation and add repository metadata to package.json ([7c3075f](https://github.com/JoeWrights/release-cli/commit/7c3075f2b2940c1f2a37f215e17a89d7f671b99e))
 
 
-### ♻️ Code Refactoring
+### 📝 Documentation
 
-* Introduce CommitType enum and COMMIT_TYPES_DISPLAY_NAME for improved commit type handling in changelog generation ([3f16e0b](https://github.com/JoeWrights/release-cli/commit/3f16e0b4a89057538d0f2c92970817bd6b8795c8))
-* Update changelog generation to use CommitType enum for type display names and define a comprehensive sorting order for commit types ([a8f3c36](https://github.com/JoeWrights/release-cli/commit/a8f3c36b11d4d14dafdc3bcabe6fafbc17ad3d31))
+* correct minor typo in README description of CLI tool ([4c39669](https://github.com/JoeWrights/release-cli/commit/4c396692fca080a5fa7b0abef262ae9fc825f4e3))
+* update README to include additional features of the CLI tool ([016275b](https://github.com/JoeWrights/release-cli/commit/016275b2e7395049f29827230cda68b092edc15e))
 
 
 ### 🔧 Chores
@@ -28,6 +34,7 @@
 * bump version to 1.0.2-alpha.7 and comment out changelog transformation logic ([cd9bbc3](https://github.com/JoeWrights/release-cli/commit/cd9bbc301806092fca4c9205b4b29d9e4a095460))
 * bump version to 1.0.2-alpha.9 and enhance changelog transformation logic with custom commit type mapping and sorting ([5086d51](https://github.com/JoeWrights/release-cli/commit/5086d514b0075ad8f04cab777cc2c41f8688a66d))
 * comment out changelog transformation logic for commit types ([e30433b](https://github.com/JoeWrights/release-cli/commit/e30433bc46d1ece26028bc214adb41436332d206))
+* comment out sorting logic in changelog generation for future reference ([f1d1577](https://github.com/JoeWrights/release-cli/commit/f1d1577909a8b9ee25bbdae54de309356f0ec242))
 * downgrade conventional-changelog dependency and update changelog generation preset to use angular format ([d64a8f0](https://github.com/JoeWrights/release-cli/commit/d64a8f0e6505d23accba61123c4f8bcf24d1b71c))
 * enhance changelog transformation logic to improve commit processing and type handling ([b4b70a6](https://github.com/JoeWrights/release-cli/commit/b4b70a62b7ec5db2e8df57360dcff783dd35ce63))
 * enhance changelog transformation logic to include detailed commit processing and maintain type mapping ([ef34935](https://github.com/JoeWrights/release-cli/commit/ef34935e13b620747f0b5bdcac7882c9bf89bcce))
@@ -69,12 +76,7 @@
 * v1.0.3 changelog [ci skip] ([310274c](https://github.com/JoeWrights/release-cli/commit/310274cdd946b1e27153d13daef5d6e22f859fcd))
 * v1.0.4 changelog [ci skip] ([daec414](https://github.com/JoeWrights/release-cli/commit/daec414fbb5212712a0b6bcb636dfc446d8507cf))
 * v1.0.5 changelog [ci skip] ([9fdf5a5](https://github.com/JoeWrights/release-cli/commit/9fdf5a5f9a1904c958e15234bc7dd604e9639bd5))
-
-
-### 📝 Documentation
-
-* correct minor typo in README description of CLI tool ([4c39669](https://github.com/JoeWrights/release-cli/commit/4c396692fca080a5fa7b0abef262ae9fc825f4e3))
-* update README to include additional features of the CLI tool ([016275b](https://github.com/JoeWrights/release-cli/commit/016275b2e7395049f29827230cda68b092edc15e))
+* v1.0.6 changelog [ci skip] ([812de6d](https://github.com/JoeWrights/release-cli/commit/812de6d7a23701d7050ff5a21ead20561f3c2d06))
 
 
 ### Debug

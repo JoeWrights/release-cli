@@ -10,6 +10,8 @@ import {
     StructError,
 } from "superstruct"
 
+import { COMMIT_TYPES_DISPLAY_NAME } from "./constants"
+
 /**
  * Release CLI 配置 Schema
  */
@@ -25,9 +27,36 @@ export const releaseCliConfigSchema = object({
     autoTag: defaulted(optional(boolean()), false),
 
     /**
+     * Tag 前缀
+     */
+    tagPrefix: defaulted(optional(string()), "v"),
+
+    /**
      * Tag 后缀
      */
     tagSuffix: defaulted(optional(string()), ""),
+
+    /**
+     * Commit Type 展示名称
+     */
+    commitTypeDisplayName: defaulted(
+        optional(
+            object({
+                feat: string(),
+                fix: string(),
+                perf: string(),
+                refactor: string(),
+                docs: string(),
+                style: string(),
+                test: string(),
+                build: string(),
+                ci: string(),
+                revert: string(),
+                chore: string(),
+            }),
+        ),
+        COMMIT_TYPES_DISPLAY_NAME,
+    ),
 
     /**
      * 禁止发布的分支列表

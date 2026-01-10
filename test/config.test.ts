@@ -39,7 +39,9 @@ describe("配置验证", () => {
 
             expect(result.autoBuild).toBe(true)
             expect(result.autoTag).toBe(false)
+            expect(result.tagPrefix).toBe("v")
             expect(result.tagSuffix).toBe("")
+            expect(result.npmRegistry).toBe("https://registry.npmmirror.com")
             expect(result.branchBlacklist).toEqual(["master", "main"])
             expect(result.packageJsonFileIndent).toBe(4)
             console.log("✓ 默认值验证通过")
@@ -138,6 +140,114 @@ describe("配置验证", () => {
                 expect(() => validateConfig(input)).toThrow()
             })
             console.log("✓ 非对象配置拒绝验证通过")
+        })
+
+        it("应该接受 npmRegistry 配置", () => {
+            console.log("📝 测试：验证 npmRegistry 配置")
+            const config = {
+                npmRegistry: "https://registry.npmjs.org",
+            }
+            console.log("📦 输入配置：", config)
+
+            const result = validateConfig(config)
+            console.log("✅ 验证结果：", result.npmRegistry)
+            expect(result.npmRegistry).toBe("https://registry.npmjs.org")
+            console.log("✓ npmRegistry 配置验证通过")
+        })
+
+        it("应该应用 npmRegistry 默认值", () => {
+            console.log("📝 测试：验证 npmRegistry 默认值")
+            const config = {}
+            console.log("📦 输入配置（空对象）：", config)
+
+            const result = validateConfig(config)
+            console.log("✅ 验证结果：", result.npmRegistry)
+            expect(result.npmRegistry).toBe("https://registry.npmmirror.com")
+            console.log("✓ npmRegistry 默认值验证通过")
+        })
+
+        it("应该验证 npmRegistry 字符串类型", () => {
+            console.log("📝 测试：验证 npmRegistry 字符串类型检查")
+            const config = {
+                npmRegistry: 123, // 数字，应该失败
+            }
+            console.log("📦 输入配置（无效类型）：", config)
+            console.log("⚠️  预期：应该抛出错误")
+
+            expect(() => validateConfig(config)).toThrow()
+            console.log("✓ npmRegistry 类型验证通过")
+        })
+
+        it("应该接受 tagPrefix 配置", () => {
+            console.log("📝 测试：验证 tagPrefix 配置")
+            const config = {
+                tagPrefix: "release-",
+            }
+            console.log("📦 输入配置：", config)
+
+            const result = validateConfig(config)
+            console.log("✅ 验证结果：", result.tagPrefix)
+            expect(result.tagPrefix).toBe("release-")
+            console.log("✓ tagPrefix 配置验证通过")
+        })
+
+        it("应该应用 tagPrefix 默认值", () => {
+            console.log("📝 测试：验证 tagPrefix 默认值")
+            const config = {}
+            console.log("📦 输入配置（空对象）：", config)
+
+            const result = validateConfig(config)
+            console.log("✅ 验证结果：", result.tagPrefix)
+            expect(result.tagPrefix).toBe("v")
+            console.log("✓ tagPrefix 默认值验证通过")
+        })
+
+        it("应该接受 commitTypeDisplayName 配置", () => {
+            console.log("📝 测试：验证 commitTypeDisplayName 配置")
+            const config = {
+                commitTypeDisplayName: {
+                    feat: "✨ 新功能",
+                    fix: "🐛 修复",
+                    ui: "🎨 UI 更新",
+                },
+            }
+            console.log("📦 输入配置：", config)
+
+            const result = validateConfig(config)
+            console.log("✅ 验证结果：", result.commitTypeDisplayName)
+            expect(result.commitTypeDisplayName?.feat).toBe("✨ 新功能")
+            expect(result.commitTypeDisplayName?.fix).toBe("🐛 修复")
+            expect(result.commitTypeDisplayName?.ui).toBe("🎨 UI 更新")
+            console.log("✓ commitTypeDisplayName 配置验证通过")
+        })
+
+        it("应该验证 commitTypeDisplayName 中 ui 类型", () => {
+            console.log("📝 测试：验证 commitTypeDisplayName 包含 ui 类型")
+            const config = {
+                commitTypeDisplayName: {
+                    ui: "🎨 UI 更新",
+                },
+            }
+            console.log("📦 输入配置：", config)
+
+            const result = validateConfig(config)
+            console.log("✅ 验证结果：", result.commitTypeDisplayName)
+            expect(result.commitTypeDisplayName?.ui).toBe("🎨 UI 更新")
+            console.log("✓ ui 类型验证通过")
+        })
+
+        it("应该验证 commitTypeDisplayName 字符串类型", () => {
+            console.log("📝 测试：验证 commitTypeDisplayName 字符串类型检查")
+            const config = {
+                commitTypeDisplayName: {
+                    feat: 123, // 数字，应该失败
+                },
+            }
+            console.log("📦 输入配置（无效类型）：", config)
+            console.log("⚠️  预期：应该抛出错误")
+
+            expect(() => validateConfig(config)).toThrow()
+            console.log("✓ commitTypeDisplayName 类型验证通过")
         })
     })
 

@@ -20,7 +20,7 @@ describe("constants 模块", () => {
                 ReleaseType.MAJOR,
                 ReleaseType.MINOR,
                 ReleaseType.PATCH,
-                ReleaseType.PRELEASE,
+                ReleaseType.PRERELEASE,
             ])
             console.log("✓ BUMPS 常量验证通过")
         })
@@ -45,8 +45,9 @@ describe("constants 模块", () => {
             expect(patchBump?.intro).toContain("补丁版本")
 
             const preReleaseBump = BUMPS.find(
-                (b) => b.type === ReleaseType.PRELEASE,
+                (b) => b.type === ReleaseType.PRERELEASE,
             )
+            expect(preReleaseBump).toBeDefined()
             expect(preReleaseBump?.intro).toContain("预发布")
         })
     })

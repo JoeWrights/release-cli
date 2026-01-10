@@ -152,11 +152,11 @@ async function release(options?: Record<string, any>) {
     const packageName = getPackageJson().name
 
     try {
-        // 使用 --registry 参数指定镜像地址，避免修改全局 npm 配置
         const { stdout: npmPackageVersion } = execa.commandSync(
-            `npm view ${packageName} version --registry=${registry}`,
+            `npm view ${packageName} version --registry ${registry}`,
             {
-                timeout: 10000, // 设置 10 秒超时
+                // 设置 10 秒超时，避免网络问题导致阻塞
+                timeout: 10000,
             },
         )
 
@@ -174,19 +174,11 @@ async function release(options?: Record<string, any>) {
         )
     }
 
-    console.log("start read package.json")
-
     const pkgContent = JSON.parse(
         fs.readFileSync(getPackageJsonPath(), "utf-8"),
     )
 
-    console.log("end read package.json")
-
     pkgContent.version = version
-
-    console.log(pkgContent, "pkgContent")
-
-    console.log("start write package.json")
 
     fs.writeFileSync(
         getPackageJsonPath(),
@@ -197,13 +189,7 @@ async function release(options?: Record<string, any>) {
         )}\n`,
     )
 
-    console.log("end write package.json")
-
-    console.log("start changelog")
-
     await generateChangelog(version, mergedConfig)
-
-    console.log("end changelog")
 
     if (mergedConfig.autoBuild) {
         await execa("npm", ["run", "build"], {

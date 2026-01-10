@@ -93,15 +93,19 @@ export enum CommitType {
      */
     DOCS = "docs",
     /**
-     * Styles 样式
+     * Styles 表示代码样式修改的提交，如不影响程序逻辑的修改（例如空格、格式、缺少分号等）
      */
     STYLE = "style",
     /**
-     * Chores 杂项
+     * UI 表示用户界面相关的提交，如样式修改、动画效果等
+     */
+    UI = "ui",
+    /**
+     * Chores 杂项，不涉及到任何代码修改的提交，如更新依赖、更新配置文件等
      */
     CHORE = "chore",
     /**
-     * Security 安全
+     * Security 安全，与安全性相关的提交，如修复安全漏洞、加密数据等
      */
     SECURITY = "security",
     /**
@@ -117,7 +121,7 @@ export enum CommitType {
      */
     ACCESSIBILITY = "accessibility",
     /**
-     * Dependencies 依赖
+     * Dependencies 依赖，如更新依赖、删除依赖等
      */
     DEPS = "deps",
 }
@@ -139,9 +143,15 @@ export interface ReleaseCliOptions {
      */
     tagPrefix?: string
     /**
-     * Tag 后缀
+     * tag 后缀
      */
     tagSuffix?: string
+    /**
+     * npm registry 地址
+     * 默认使用淘宝镜像：https://registry.npmmirror.com
+     * 也可以使用其他镜像，如：https://registry.npmjs.org
+     */
+    npmRegistry?: string
     /**
      * 禁止发布的分支列表
      */
